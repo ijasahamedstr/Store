@@ -88,6 +88,12 @@ function ResponsiveAppBar() {
               anchor="left"
               open={drawerOpen}
               onClose={toggleDrawer(false)}
+              sx={{
+                '& .MuiDrawer-paper': {
+                  backgroundColor: '#000', // Black background
+                  color: '#fff', // White text for better visibility
+                },
+              }}
             >
               {drawerList()}
             </Drawer>
@@ -112,7 +118,7 @@ function ResponsiveAppBar() {
           >
             <img src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png' alt="Logo" style={{ height: '40px' }} />
           </Typography>
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

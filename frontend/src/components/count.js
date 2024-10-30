@@ -1,8 +1,8 @@
 import React from 'react';
 import '../css/TextCard.css'; // Import your CSS for styling
 import { Container } from 'react-bootstrap';
-import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { Grid, Box } from '@mui/material';
 
 
 const TextCard = ({
@@ -67,15 +67,18 @@ const TextCard = ({
               </p>
               <Button
                 variant="contained"
-                color="primary"
-                style={{
-                  margin: '10px',
-                  background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
-                  color: '#fff', // Optional: to ensure the text is readable
-                  border: 'none', // Optional: to remove the default button border
-                  fontSize:'18px',
+                size="medium" // Set the size to medium
+                sx={{
+                  background: 'linear-gradient(90deg, #2196F3, #21CBF3)',
+                  color: '#fff',
+                  '&:hover': {
+                    background: '#115293',
+                  },
                 }}
+                
+                style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
               >
+                
                 تفاصيل الإحصائيات 
               </Button>
 
@@ -95,6 +98,18 @@ const TextCard = ({
           </div>
         </Container>
       </Grid>
+      <Grid item xs={12}>
+      <Container fluid maxWidth="lg" style={{ margin: '10px 0', padding: '0 9%', marginTop: '30px' }}>
+        <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
+          <img
+            width="400"
+            src="https://ehsan.sa/assets/images/homepage/lntnalo-ayah.svg"
+            alt="وَأَحْسِنُوا ۛ إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ"
+            style={{ marginBottom: '15px', filter: 'invert(100%)', imageRendering: 'optimizeQuality' }} // Added optimizeQuality for better clarity
+          />
+        </Box>
+      </Container>
+    </Grid>
     </Grid>
   </section>
   );
