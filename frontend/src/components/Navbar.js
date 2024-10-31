@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,20 +16,19 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
 
 const pages = ['Products', 'About', 'Contact'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Login', 'Register'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const navigate = useNavigate(); // Use the navigate hook
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
-  const toggleDrawer = (open) => () => {
-    setDrawerOpen(open);
-  };
+  const toggleDrawer = (open) => () => setDrawerOpen(open);
 
   const drawerList = () => (
     <Box
@@ -42,7 +41,7 @@ function ResponsiveAppBar() {
         <img
           src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
           alt="Logo"
-          style={{ height: '40px' }} // Adjust the height as needed
+          style={{ height: '40px' }}
         />
       </Box>
       {pages.map((page) => (
@@ -54,7 +53,7 @@ function ResponsiveAppBar() {
   );
 
   return (
-    <AppBar position="static" style={{ background: '#000' }}>
+    <AppBar position="static" sx={{ background: '#000' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -90,34 +89,14 @@ function ResponsiveAppBar() {
               onClose={toggleDrawer(false)}
               sx={{
                 '& .MuiDrawer-paper': {
-                  backgroundColor: '#000', // Black background
-                  color: '#fff', // White text for better visibility
+                  backgroundColor: '#000',
+                  color: '#fff',
                 },
               }}
             >
               {drawerList()}
             </Drawer>
           </Box>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              fontFamily: 'Noto Kufi Arabic, sans-serif',
-            }}
-          >
-            <img src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png' alt="Logo" style={{ height: '40px' }} />
-          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -134,7 +113,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0, ml: 2 }}>
-            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart" sx={{ mx: 1 }}>
+            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart">
               <ShoppingCartIcon />
             </IconButton>
 
@@ -156,7 +135,7 @@ function ResponsiveAppBar() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => {
                   handleCloseUserMenu();
-                  // Add routing or any action here
+                  navigate(`/${setting.toLowerCase()}`); // Navigate to the route based on the setting
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>

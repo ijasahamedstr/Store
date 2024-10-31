@@ -98,18 +98,22 @@ const TextCard = ({
           </div>
         </Container>
       </Grid>
-      <Grid item xs={12}>
-      <Container fluid maxWidth="lg" style={{ margin: '10px 0', padding: '0 9%', marginTop: '30px' }}>
-        <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
-          <img
-            width="400"
-            src="https://ehsan.sa/assets/images/homepage/lntnalo-ayah.svg"
-            alt="وَأَحْسِنُوا ۛ إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ"
-            style={{ marginBottom: '15px', filter: 'invert(100%)', imageRendering: 'optimizeQuality' }} // Added optimizeQuality for better clarity
-          />
-        </Box>
+      <Container
+        fluid
+        style={{ '--bs-gutter-x': '0rem' }}
+      >
+        <div className="text-card">
+          <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
+            <img
+              width="400"
+              src="https://ehsan.sa/assets/images/homepage/lntnalo-ayah.svg"
+              alt="وَأَحْسِنُوا ۛ إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ"
+              style={{ marginBottom: '15px', filter: 'invert(100%)', imageRendering: 'optimizeQuality' }} // Added optimizeQuality for better clarity
+            />
+          </Box>
+        </div>
       </Container>
-    </Grid>
+
     </Grid>
   </section>
   );

@@ -34,7 +34,6 @@ function EcommerceProductListing() {
       img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp",
       combo: "x1",
     },
-    // New Products
     {
       title: "Dell XPS 13",
       img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",
@@ -73,7 +72,7 @@ function EcommerceProductListing() {
               variant="contained"
               sx={{
                 padding: '10px 20px',
-                fontSize: '1.1rem',
+                fontSize: { xs: '1rem', sm: '1.1rem' },
                 borderRadius: 2,
                 background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
                 color: '#fff',
@@ -81,13 +80,13 @@ function EcommerceProductListing() {
                   background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
                 },
               }}
-              style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1rem' }}
+              style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
             >
               عرض المزيد
             </Button>
           </Box>
         </Box>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           {products.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card
@@ -95,13 +94,15 @@ function EcommerceProductListing() {
                   transition: '0.3s',
                   '&:hover': {
                     boxShadow: 4,
-                    transform: 'scale(1.02)'
+                    transform: 'scale(1.02)',
                   },
-                  borderRadius: 2
+                  borderRadius: 2,
                 }}
               >
-                <Box display="flex" justifyContent="space-between" p={3}>
-                  <Typography variant="h6" component="span" style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1rem' }}>تأثيث منازل المتعففين</Typography>
+                <Box display="flex" justifyContent="space-between" p={2}>
+                  <Typography variant="h6" component="span" style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '0.9rem' }}>
+                    تأثيث منازل المتعففين
+                  </Typography>
                   <Badge
                     badgeContent={product.combo}
                     color="info"
@@ -116,8 +117,8 @@ function EcommerceProductListing() {
                 />
                 
                 <CardContent>
-                    <Box display="flex" justifyContent="center" alignItems="center" mb={3}>
-                    <Grid container spacing={2} justifyContent="space-between"> {/* Space between for left/right alignment */}
+                  <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
+                    <Grid container spacing={1} justifyContent="space-between">
                       <Grid item xs={8}>
                         <TextField
                           label="Amount"
@@ -125,7 +126,7 @@ function EcommerceProductListing() {
                           size="small"
                           InputProps={{
                             style: {
-                              borderRadius: '20px', // Rounded corners
+                              borderRadius: '20px',
                             },
                           }}
                           fullWidth
@@ -135,11 +136,12 @@ function EcommerceProductListing() {
                         <Button
                           variant="contained"
                           color="primary"
-                          style={{
+                          sx={{
                             borderRadius: '50px',
                             fontFamily: 'Noto Kufi Arabic, sans-serif',
-                            padding: '8px 16px', // Adjust padding for a smaller button
-                            width: '100%', // Make button full width within its grid item
+                            padding: { xs: '6px 12px', sm: '8px 16px' },
+                            width: '100%',
+                            fontSize: { xs: '0.875rem', sm: '1rem' },
                           }}
                         >
                           تبرع الآن
@@ -147,22 +149,24 @@ function EcommerceProductListing() {
                       </Grid>
                     </Grid>
                   </Box>
-                  <Box mt={2}>
-                  <Button
-                    variant="contained"
-                    startIcon={<AddShoppingCartIcon />}
-                    sx={{
-                      background: 'linear-gradient(90deg, #2196F3, #21CBF3)',
-                      color: '#fff',
-                      '&:hover': {
-                        background: '#115293',
-                      },
-                    }}
-                    fullWidth
-                    style={{fontFamily: 'Noto Kufi Arabic, sans-serif'}}
-                  >
-                    أضف إلى السلة
-                  </Button>
+                  <Box mt={1}>
+                    <Button
+                      variant="contained"
+                      startIcon={<AddShoppingCartIcon />}
+                      sx={{
+                        background: 'linear-gradient(90deg, #2196F3, #21CBF3)',
+                        color: '#fff',
+                        '&:hover': {
+                          background: '#115293',
+                        },
+                        padding: { xs: '6px 12px', sm: '8px 16px' },
+                        fontSize: { xs: '0.875rem', sm: '1rem' },
+                      }}
+                      fullWidth
+                      style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
+                    >
+                      أضف إلى السلة
+                    </Button>
                   </Box>
                 </CardContent>
               </Card>

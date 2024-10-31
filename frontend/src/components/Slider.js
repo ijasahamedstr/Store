@@ -37,11 +37,11 @@ const FadeCarousel = () => {
                 alt={item.title}
                 style={{ height: '60vh', objectFit: 'cover' }} // Adjust height as needed
               />
-              <Carousel.Caption sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+              <Carousel.Caption>
                 <Typography variant="h4" sx={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                   {item.title}
                 </Typography>
-                <Typography variant="body1" sx={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)', textAlign: 'center' }}>
+                <Typography variant="body1" sx={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                   {item.content}
                 </Typography>
               </Carousel.Caption>
