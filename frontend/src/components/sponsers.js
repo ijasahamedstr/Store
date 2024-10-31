@@ -45,7 +45,7 @@ const images = [
 
 const ImageCard = () => {
   return (
-    <Container style={{marginBottom:'60px'}}>
+    <Container style={{marginBottom:'60px',marginTop:'60px'}}>
       <Typography variant="h4" align="center" gutterBottom  style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1.5rem',marginBottom:'30px' }}>
       البائعين عبر الفئات
       </Typography>

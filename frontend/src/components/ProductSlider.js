@@ -8,8 +8,9 @@ import {
   Typography,
   Box,
   Badge,
+  Button,
+  TextField,
 } from "@mui/material";
-import { TextField, Button } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function EcommerceProductListing() {
@@ -47,9 +48,9 @@ function EcommerceProductListing() {
   ];
 
   return (
-    <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto', marginTop: '-50px' }}>
-      <Container fluid maxWidth="xl" className="my-5" sx={{ padding: 3 }}>
-        <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
+    <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto', paddingTop: '20px' }}>
+      <Container maxWidth="xl" sx={{ padding: 3 }}>
+        <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginY: '20px' }}>
           <img
             width="400"
             src="https://ehsan.sa/assets/images/homepage/ahseno-ayah.svg"
@@ -67,12 +68,14 @@ function EcommerceProductListing() {
           mb={3}
         >
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h4" style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1.5rem' }}>قوائم المنتجات</Typography>
+            <Typography variant="h4" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.2rem', md: '1.5rem' } }}>
+              قوائم المنتجات
+            </Typography>
             <Button
               variant="contained"
               sx={{
                 padding: '10px 20px',
-                fontSize: { xs: '1rem', sm: '1.1rem' },
+                fontSize: { xs: '0.9rem', sm: '1rem' },
                 borderRadius: 2,
                 background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
                 color: '#fff',
@@ -100,7 +103,7 @@ function EcommerceProductListing() {
                 }}
               >
                 <Box display="flex" justifyContent="space-between" p={2}>
-                  <Typography variant="h6" component="span" style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '0.9rem' }}>
+                  <Typography variant="h6" component="span" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '0.9rem' }}>
                     تأثيث منازل المتعففين
                   </Typography>
                   <Badge
