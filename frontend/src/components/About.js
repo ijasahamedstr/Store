@@ -2,7 +2,8 @@
 export default function Aboutus() {
     return (
       <>
-      <h1>About Page</h1>
+      <h1 style={{textAlign:'center'}}>مــواهــب
+      أولادنا و بناتنا</h1>
       </>
     );
   }

@@ -1,7 +1,9 @@
-export default function Cart() {
+export default function Cartnew() {
     return (
       <>
-      <h1>Cart Page</h1>
+      <br/> <br/><br/><br/><br/><br/><br/><br/>
+      <h1>مــواهــب
+      أولادنا و بناتنا</h1>
       </>
     );
   }

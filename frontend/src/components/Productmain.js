@@ -1,52 +1,26 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Box, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import '../css/categories.css'; // Ensure your CSS file is imported
+import React from "react";
+import {
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Badge,
+  Button,
+} from "@mui/material";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Link } from 'react-router-dom';
 
-const categories = [
-  { id: '1', name: 'Electronics', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Electronics.svg' },
-  { id: '2', name: 'Fashion', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Fashion.svg' },
-  { id: '3', name: 'Home & Garden', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Home-Decor.svg' },
-  { id: '4', name: 'Sports', img: 'https://via.placeholder.com/150' },
-  { id: '5', name: 'Beauty', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Beauty-Personal-Care.svg' },
-  { id: '6', name: 'Health & Wellness', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Health-Wellness.svg' },
-  { id: '7', name: 'Appliances', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Appliances.svg' },
-  { id: '8', name: 'Automotive', img: 'https://d2pyicwmjx3wii.cloudfront.net/s/62ea2c599d1398fa16dbae0a/ms.files/navicons/Automotive.svg' },
-  { id: '9', name: 'Jewelry', img: 'https://via.placeholder.com/150' },
-  { id: '10', name: 'Fitness', img: 'https://via.placeholder.com/150' },
-];
-
-const DraggableCardSlider = () => {
-  const [items, setItems] = useState(categories);
-  const [autoplay, setAutoplay] = useState(true);
-
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-
-    const reorderedItems = Array.from(items);
-    const [movedItem] = reorderedItems.splice(result.source.index, 1);
-    reorderedItems.splice(result.destination.index, 0, movedItem);
-    setItems(reorderedItems);
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay,
-    autoplaySpeed: 2000,
-    responsive: [
-      { breakpoint: 1500, settings: { slidesToShow: 10, slidesToScroll: 1 } },
-      { breakpoint: 1024, settings: { slidesToShow: 5, slidesToScroll: 1 } },
-      { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-    ],
-  };
+function EcommerceProductListing() {
+  const products = [
+    { title: "دورات "},
+    { title: "طب "},
+    { title: " مواهب أولادنا و بناتنا"},
+    { title: " تخفيضات"},
+    { title: "تبرعات"},
+    { title: "اسأل المختص"},
+  ];
 
   return (
     <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto', paddingTop: '20px' }}>
@@ -150,6 +124,6 @@ const DraggableCardSlider = () => {
       </Container>
     </section>
   );
-};
+}
 
-export default DraggableCardSlider;
+export default EcommerceProductListing;

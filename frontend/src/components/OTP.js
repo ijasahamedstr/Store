@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 
-const LoginCard = () => {
+const OTPlogin = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     console.log("Login clicked");
@@ -18,18 +18,18 @@ const LoginCard = () => {
                   <img width="80" src='https://ehsan.sa/assets/images/login/login.png' alt="Login" />
                 </Card.Title>
                 <h2 className="text-center" style={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1.5rem', marginBottom: '20px' }}>
-                  تسجيل الدخول
+                أدخل كلمة المرور
                 </h2>
                 <Form onSubmit={handleLogin}>
                   <Form.Group className="mb-3">
                     <Form.Control 
-                      type="email"  
+                      type="number" 
                       required 
                       style={{ borderRadius: '30px' }} 
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit" className="w-100" style={{ borderRadius: '20px', background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)', fontFamily: 'Noto Kufi Arabic, sans-serif' }}>
-                    تسجيل الدخول
+                  إرسال كلمة مرور لمرة واحدة
                   </Button>
                 </Form>
               </Card.Body>
@@ -41,4 +41,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard;
+export default OTPlogin;

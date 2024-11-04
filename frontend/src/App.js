@@ -11,6 +11,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Footer from './components/Footer';
 import LoginCard from './components/Login';
+import Categoriesview from './components/categoriesview';
+import ProductView from './components/ProductsingleView';
+import Subcategorie from './components/subcategorie';
+import Userview from './components/userview';
+import Registration from './components/Registration';
+import OTPlogin from './components/OTP';
 
 
 
@@ -31,6 +37,12 @@ function App() {
         <Route path="/About" element={<Aboutus />} />
         <Route path="/Contact" element={<Contactus/>} />
         <Route path="/Login" element={<LoginCard/>} />
+        <Route path="/categories" element={<Categoriesview/>} />
+        <Route path="/ProductView" element={<ProductView/>} />
+        <Route path="/Subcategorie" element={<Subcategorie/>} />
+        <Route path="/userview" element={<Userview/>} />
+        <Route path="/register" element={<Registration/>} />
+        <Route path="/cart" element={<OTPlogin/>} />
       </Routes>
       <Footer/>
     </Router>

@@ -1,5 +1,5 @@
 import TextCard from "./count";
-import EcommerceProductListing from "./ProductSlider";
+import EcommerceProductListing from "./Productmain";
 import FadeCarousel from "./Slider";
 import ImageCard from "./sponsers";
 
