@@ -1,12 +1,9 @@
-import AccountRegisterCustomer from "../models/AccountRegistercustomer.models";
+import AccountRegisterCustomer from "../models/AccountRegistercustomer.models.js";
 
 export const AccountCreate = async (req, res) => {
     const { fullname, email, phoneno, address, proofimage, accountstatus } = req.body;
 
-    // Check for all required fields
-    if (!fullname || !email || !phoneno || !address || !proofimage || !accountstatus) {
-        return res.status(400).json({ error: "Please enter all input data." });
-    }
+ 
 
     try {
         // Check if the user already exists

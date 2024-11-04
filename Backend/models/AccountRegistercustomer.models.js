@@ -9,11 +9,11 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 // Define the schema
 const AccountRegisterCustomerSchema = new Schema({
-    Fullname: {
+    fullname : {
         type: String,
         required: true,
     },
-    Email: {
+    email: {
         type: String,
         required: true,
         validate(value) {
@@ -22,7 +22,7 @@ const AccountRegisterCustomerSchema = new Schema({
             }
         },
     },
-    PhoneNo: {
+    phoneno: {
         type: String,
         validate(value) {
             if (!validator.isMobilePhone(value, 'any', { strictMode: false })) {
@@ -33,10 +33,13 @@ const AccountRegisterCustomerSchema = new Schema({
     otp: {
         type: String,
     },
-    Address: {
+    address: {
         type: String,
     },
-    ProofImage: {
+    proofimage: {
+        type: String,
+    },
+    accountstatus: {
         type: String,
     },
     date: {

@@ -22,22 +22,18 @@ import { Link } from 'react-router-dom';
 
 const Userview = () => {
     const products = [
-        { title: "HP Notebook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp", combo: "x4" },
-        { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp", combo: "x2" },
-        { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp", combo: "x3" },
-        { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp", combo: "x1" },
-        { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp", combo: "x2" },
-        { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp", combo: "x1" },
-        { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp", combo: "x3" },
-        { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp", combo: "x1" },
-        { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp", combo: "x2" },
-        { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp", combo: "x1" },
+        { title: "HP Notebook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp", combo: "x4", description: "A powerful notebook for work and play." },
+        { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp", combo: "x2", description: "Stylish and high-performance." },
+        { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp", combo: "x3", description: "Reliable for everyday tasks." },
+        { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp", combo: "x1", description: "Designed for business professionals." },
+        { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp", combo: "x2", description: "Ultra-portable and powerful." },
+        { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp", combo: "x1", description: "Elegance and performance combined." },
         // Add more products if necessary for testing pagination
     ];
 
     const [currentPage, setCurrentPage] = useState(1);
     const [openDialog, setOpenDialog] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const itemsPerPage = 8; // Adjust the number of items per page
 
     // Calculate the indices for the current page
@@ -48,14 +44,14 @@ const Userview = () => {
     // Calculate total pages
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
-    const handleImageClick = (img) => {
-        setSelectedImage(img);
+    const handleImageClick = (product) => {
+        setSelectedProduct(product); // Set the selected product
         setOpenDialog(true);
     };
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
-        setSelectedImage(null);
+        setSelectedProduct(null);
     };
 
     return (
@@ -126,13 +122,13 @@ const Userview = () => {
                                                 component="img"
                                                 image={product.img}
                                                 alt={product.title}
-                                                onClick={() => handleImageClick(product.img)} // Click handler for image
+                                                onClick={() => handleImageClick(product)} // Click handler for image
                                                 sx={{ height: { xs: 150, sm: 200 }, objectFit: "cover", borderTopLeftRadius: 2, borderTopRightRadius: 2, cursor: 'pointer' }} // Add cursor style
                                             />
                                             <CardContent>
                                                 <Box mt={1}>
                                                     <Button
-                                                     component={Link} to="/ProductView"
+                                                        component={Link} to="/ProductView"
                                                         variant="contained"
                                                         startIcon={<AddShoppingCartIcon />}
                                                         sx={{
@@ -170,21 +166,32 @@ const Userview = () => {
 
             {/* Dialog for Image Popup */}
             <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
-                <DialogContent>
-                    <IconButton 
-                        onClick={handleCloseDialog} 
-                        sx={{ position: 'absolute', right: 8, top: 8 }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <CardMedia
-                        component="img"
-                        image={selectedImage}
-                        alt="Selected Product"
-                        sx={{ height: 'auto', maxHeight: 500, objectFit: 'contain' }}
-                    />
-                </DialogContent>
-            </Dialog>
+            <DialogContent>
+                <IconButton onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
+                    <CloseIcon />
+                </IconButton>
+                {selectedProduct && (
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <CardMedia
+                                component="img"
+                                image={selectedProduct.img}
+                                alt={selectedProduct.title}
+                                sx={{ height: 'auto', maxHeight: 500, objectFit: 'contain' }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                                {selectedProduct.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                {selectedProduct.description}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                )}
+            </DialogContent>
+        </Dialog>
         </section>
     );
 };

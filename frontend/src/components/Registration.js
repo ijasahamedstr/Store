@@ -12,7 +12,6 @@ import {
     TextField,
     Card,
     Button,
-    FormHelperText,
 } from "@mui/material";
 
 const TabPanel = (props) => {
@@ -31,108 +30,96 @@ const TabPanel = (props) => {
 };
 
 const Registration = () => {
-    const [value, setValue] = useState(0);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [idProof, setIdProof] = useState(null);
-    const [idProofError, setIdProofError] = useState(false);
-    const [idProofErrorMessage, setIdProofErrorMessage] = useState('');
+    const [value, setValue] = useState(0); // Initialize state for tab value
 
-    const [nameError, setNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [addressError, setAddressError] = useState(false);
-    const [nameErrorMessage, setNameErrorMessage] = useState('');
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
-    const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
-    const [addressErrorMessage, setAddressErrorMessage] = useState('');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleTabChange = (event, newValue) => {
+        setValue(newValue); // Update state when tab changes
     };
 
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-        setNameError(false);
-        setNameErrorMessage('');
-    };
+    // Database Conncect Endpoint 
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-        setEmailError(false);
-        setEmailErrorMessage('');
-    };
+const [fullname, setfullname] = useState('');
+const [email, setemail] = useState('');
+const [phoneno, setphoneno] = useState('');
+const [address, setaddress] = useState('');
+const [proofimage, setproofimage] = useState('');
+const [accountstatus, setaccountstatus] = useState('');
 
-    const handlePhoneChange = (event) => {
-        setPhone(event.target.value);
-        setPhoneError(false);
-        setPhoneErrorMessage('');
-    };
+const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleAddressChange = (event) => {
-        setAddress(event.target.value);
-        setAddressError(false);
-        setAddressErrorMessage('');
-    };
+    // Client-side validation
+    if (fullname === '') {
+      toast.error('Please enter your full name.');
+      return;
+    }
+    if (email === '') {
+      toast.error('Please enter your email address.');
+      return;
+    }
+    if (!email.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    if (phoneno === '') {
+      toast.error('Please enter your phone number.');
+      return;
+    }
+    if (address === '') {
+        toast.error('Please enter your phone number.');
+        return;
+    }
 
-    const handleIdProofChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setIdProof(file);
-            setIdProofError(false);
-            setIdProofErrorMessage('');
-        }
-    };
+    if (proofimage === '') {
+        toast.error('Please enter your phone number.');
+        return;
+    }
 
-    const validateName = () => {
-        if (name.trim() === '') {
-            setNameError(true);
-            setNameErrorMessage('الاسم مطلوب');
-        }
-    };
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_HOST}/register`, {
+        fullname,
+        email,
+        phoneno,
+        address,
+        proofimage,
+        accountstatus
+      });
+      
+      if (response.status === 200) {
+        console.log('Registration successful:', response.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Account registered successfully!',
+        });
 
-    const validateEmail = () => {
-        if (!email.includes('@')) {
-            setEmailError(true);
-            setEmailErrorMessage('البريد الإلكتروني غير صالح');
-        }
-    };
+        // Clear form fields after successful registration
+        setfullname('');
+        setemail('');
+        setphoneno('');
+        setaddress('');
+        setproofimage('');
+        setaccountstatus('');
+      } else {
+        // Handle unexpected response status
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Registration failed. Please try again.',
+        });
+      }
+    } catch (error) {
+      console.error('Registration failed:', error);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Account registered successfully!',
+      });
+    }
+  };
 
-    const validatePhone = () => {
-        if (phone.trim() === '') {
-            setPhoneError(true);
-            setPhoneErrorMessage('رقم الهاتف مطلوب');
-        }
-    };
 
-    const validateAddress = () => {
-        if (address.trim() === '') {
-            setAddressError(true);
-            setAddressErrorMessage('العنوان مطلوب');
-        }
-    };
 
-    const validateIdProof = () => {
-        if (!idProof) {
-            setIdProofError(true);
-            setIdProofErrorMessage('إثبات الهوية مطلوب');
-        }
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        validateName();
-        validateEmail();
-        validatePhone();
-        validateAddress();
-        validateIdProof();
-
-        if (!nameError && !emailError && !phoneError && !addressError && !idProofError) {
-            console.log("Form submitted with:", { name, email, phone, address, idProof });
-        }
-    };
 
     return (
         <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto', direction: 'rtl' }}>
@@ -178,13 +165,13 @@ const Registration = () => {
                             }}
                         >
                             <Box display="flex" justifyContent="center" mt={2}>
-                                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                                <Tabs value={value} onChange={handleTabChange} aria-label="simple tabs example">
                                     <Tab label="تسجيل العملاء" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }} />
                                     <Tab label="سجل البائع" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }} />
                                 </Tabs>
                             </Box>
                             <TabPanel value={value} index={0}>
-                                <Box display="flex" justifyContent="center">
+                            <Box display="flex" justifyContent="center">
                                     <Card
                                         sx={{
                                             maxWidth: '400px', // Set maximum width for smaller card
@@ -193,13 +180,12 @@ const Registration = () => {
                                             borderRadius: '20px',
                                         }}
                                     >
-                                        <h4 style={{textAlign:'center',marginBottom:'15px'}}>سجل العملاء</h4>
-                                         
+                                        <h4 style={{textAlign:'center',marginBottom:'15px'}}>سجل البائع</h4>
                                         <Box sx={{ width: '100%' }}>
-                                            <form onSubmit={handleSubmit}>
+                                            <form>
                                                 <Grid container>
                                                     <Grid item xs={12}>
-                                                        <FormControl error={nameError} fullWidth>
+                                                        <FormControl  fullWidth>
                                                             <FormLabel
                                                                 htmlFor="name"
                                                                 sx={{
@@ -219,11 +205,6 @@ const Registration = () => {
                                                                 name="name"
                                                                 required
                                                                 id="name"
-                                                                error={nameError}
-                                                                helperText={nameError ? nameErrorMessage : ' '}
-                                                                value={name}
-                                                                onChange={handleNameChange}
-                                                                onBlur={validateName}
                                                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                                                                 fullWidth
                                                             />
@@ -231,7 +212,7 @@ const Registration = () => {
                                                     </Grid>
 
                                                     <Grid item xs={12}>
-                                                        <FormControl error={emailError} fullWidth>
+                                                        <FormControl  fullWidth>
                                                             <FormLabel
                                                                 htmlFor="email"
                                                                 sx={{
@@ -251,11 +232,6 @@ const Registration = () => {
                                                                 name="email"
                                                                 required
                                                                 id="email"
-                                                                error={emailError}
-                                                                helperText={emailError ? emailErrorMessage : ' '}
-                                                                value={email}
-                                                                onChange={handleEmailChange}
-                                                                onBlur={validateEmail}
                                                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                                                                 fullWidth
                                                             />
@@ -263,7 +239,7 @@ const Registration = () => {
                                                     </Grid>
 
                                                     <Grid item xs={12}>
-                                                        <FormControl error={phoneError} fullWidth>
+                                                        <FormControl  fullWidth>
                                                             <FormLabel
                                                                 htmlFor="phone"
                                                                 sx={{
@@ -283,11 +259,6 @@ const Registration = () => {
                                                                 name="phone"
                                                                 required
                                                                 id="phone"
-                                                                error={phoneError}
-                                                                helperText={phoneError ? phoneErrorMessage : ' '}
-                                                                value={phone}
-                                                                onChange={handlePhoneChange}
-                                                                onBlur={validatePhone}
                                                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                                                                 fullWidth
                                                             />
@@ -295,7 +266,7 @@ const Registration = () => {
                                                     </Grid>
 
                                                     <Grid item xs={12}>
-                                                        <FormControl error={addressError} fullWidth>
+                                                        <FormControl fullWidth>
                                                             <FormLabel
                                                                 htmlFor="address"
                                                                 sx={{
@@ -315,11 +286,6 @@ const Registration = () => {
                                                                 name="address"
                                                                 required
                                                                 id="address"
-                                                                error={addressError}
-                                                                helperText={addressError ? addressErrorMessage : ' '}
-                                                                value={address}
-                                                                onChange={handleAddressChange}
-                                                                onBlur={validateAddress}
                                                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                                                                 fullWidth
                                                             />
@@ -327,7 +293,7 @@ const Registration = () => {
                                                     </Grid>
 
                                                     <Grid item xs={12}>
-                                                        <FormControl error={idProofError} fullWidth>
+                                                        <FormControl fullWidth>
                                                             <FormLabel
                                                                 htmlFor="idProof"
                                                                 sx={{
@@ -345,7 +311,6 @@ const Registration = () => {
                                                             <Box
                                                                 sx={{
                                                                     border: '1px solid',
-                                                                    borderColor: idProofError ? 'error.main' : 'grey.400',
                                                                     borderRadius: '4px',
                                                                     padding: '5px',
                                                                 }}
@@ -356,11 +321,9 @@ const Registration = () => {
                                                                     name="idProof"
                                                                     id="idProof"
                                                                     required
-                                                                    onChange={handleIdProofChange}
                                                                     style={{ fontFamily: 'Noto Kufi Arabic', width: '100%' }}
                                                                 />
                                                             </Box>
-                                                            {idProofError && <FormHelperText>{idProofErrorMessage}</FormHelperText>}
                                                         </FormControl>
                                                     </Grid>
 
@@ -382,201 +345,7 @@ const Registration = () => {
                                 </Box>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                            <Box display="flex" justifyContent="center">
-                                    <Card
-                                        sx={{
-                                            maxWidth: '400px', // Set maximum width for smaller card
-                                            width: '100%', // Allow card to take full width until maxWidth
-                                            padding: '20px',
-                                            borderRadius: '20px',
-                                        }}
-                                    >
-                                        <h4 style={{textAlign:'center',marginBottom:'15px'}}>سجل البائع</h4>
-                                        <Box sx={{ width: '100%' }}>
-                                            <form onSubmit={handleSubmit}>
-                                                <Grid container>
-                                                    <Grid item xs={12}>
-                                                        <FormControl error={nameError} fullWidth>
-                                                            <FormLabel
-                                                                htmlFor="name"
-                                                                sx={{
-                                                                    fontFamily: 'Noto Kufi Arabic',
-                                                                    fontSize: {
-                                                                        xs: '10px',
-                                                                        sm: '12px',
-                                                                        md: '14px',
-                                                                    },
-                                                                    marginBottom: '10px'
-                                                                }}
-                                                            >
-                                                                الاسم الكامل
-                                                            </FormLabel>
-                                                            <TextField
-                                                                autoComplete="name"
-                                                                name="name"
-                                                                required
-                                                                id="name"
-                                                                error={nameError}
-                                                                helperText={nameError ? nameErrorMessage : ' '}
-                                                                value={name}
-                                                                onChange={handleNameChange}
-                                                                onBlur={validateName}
-                                                                inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
-                                                                fullWidth
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-
-                                                    <Grid item xs={12}>
-                                                        <FormControl error={emailError} fullWidth>
-                                                            <FormLabel
-                                                                htmlFor="email"
-                                                                sx={{
-                                                                    fontFamily: 'Noto Kufi Arabic',
-                                                                    fontSize: {
-                                                                        xs: '10px',
-                                                                        sm: '12px',
-                                                                        md: '14px',
-                                                                    },
-                                                                    marginBottom: '10px'
-                                                                }}
-                                                            >
-                                                                البريد الإلكتروني
-                                                            </FormLabel>
-                                                            <TextField
-                                                                autoComplete="email"
-                                                                name="email"
-                                                                required
-                                                                id="email"
-                                                                error={emailError}
-                                                                helperText={emailError ? emailErrorMessage : ' '}
-                                                                value={email}
-                                                                onChange={handleEmailChange}
-                                                                onBlur={validateEmail}
-                                                                inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
-                                                                fullWidth
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-
-                                                    <Grid item xs={12}>
-                                                        <FormControl error={phoneError} fullWidth>
-                                                            <FormLabel
-                                                                htmlFor="phone"
-                                                                sx={{
-                                                                    fontFamily: 'Noto Kufi Arabic',
-                                                                    fontSize: {
-                                                                        xs: '10px',
-                                                                        sm: '12px',
-                                                                        md: '14px',
-                                                                    },
-                                                                    marginBottom: '10px'
-                                                                }}
-                                                            >
-                                                                رقم الهاتف
-                                                            </FormLabel>
-                                                            <TextField
-                                                                autoComplete="tel"
-                                                                name="phone"
-                                                                required
-                                                                id="phone"
-                                                                error={phoneError}
-                                                                helperText={phoneError ? phoneErrorMessage : ' '}
-                                                                value={phone}
-                                                                onChange={handlePhoneChange}
-                                                                onBlur={validatePhone}
-                                                                inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
-                                                                fullWidth
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-
-                                                    <Grid item xs={12}>
-                                                        <FormControl error={addressError} fullWidth>
-                                                            <FormLabel
-                                                                htmlFor="address"
-                                                                sx={{
-                                                                    fontFamily: 'Noto Kufi Arabic',
-                                                                    fontSize: {
-                                                                        xs: '10px',
-                                                                        sm: '12px',
-                                                                        md: '14px',
-                                                                    },
-                                                                    marginBottom: '10px'
-                                                                }}
-                                                            >
-                                                                العنوان
-                                                            </FormLabel>
-                                                            <TextField
-                                                                autoComplete="address"
-                                                                name="address"
-                                                                required
-                                                                id="address"
-                                                                error={addressError}
-                                                                helperText={addressError ? addressErrorMessage : ' '}
-                                                                value={address}
-                                                                onChange={handleAddressChange}
-                                                                onBlur={validateAddress}
-                                                                inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
-                                                                fullWidth
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-
-                                                    <Grid item xs={12}>
-                                                        <FormControl error={idProofError} fullWidth>
-                                                            <FormLabel
-                                                                htmlFor="idProof"
-                                                                sx={{
-                                                                    fontFamily: 'Noto Kufi Arabic',
-                                                                    fontSize: {
-                                                                        xs: '10px',
-                                                                        sm: '12px',
-                                                                        md: '14px',
-                                                                    },
-                                                                    marginBottom: '10px'
-                                                                }}
-                                                            >
-                                                                تحميل إثبات الهوية
-                                                            </FormLabel>
-                                                            <Box
-                                                                sx={{
-                                                                    border: '1px solid',
-                                                                    borderColor: idProofError ? 'error.main' : 'grey.400',
-                                                                    borderRadius: '4px',
-                                                                    padding: '5px',
-                                                                }}
-                                                            >
-                                                                <input
-                                                                    accept="image/*,.pdf"
-                                                                    type="file"
-                                                                    name="idProof"
-                                                                    id="idProof"
-                                                                    required
-                                                                    onChange={handleIdProofChange}
-                                                                    style={{ fontFamily: 'Noto Kufi Arabic', width: '100%' }}
-                                                                />
-                                                            </Box>
-                                                            {idProofError && <FormHelperText>{idProofErrorMessage}</FormHelperText>}
-                                                        </FormControl>
-                                                    </Grid>
-
-                                                    <Grid item xs={12}>
-                                                        <Box display="flex" justifyContent="center" mt={2}>
-                                                            <Button
-                                                                variant="contained"
-                                                                type="submit"
-                                                                sx={{ borderRadius: '20px', width: '100%', background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)', fontFamily: 'Noto Kufi Arabic, sans-serif' }}
-                                                            >
-                                                                يسجل
-                                                            </Button>
-                                                        </Box>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        </Box>
-                                    </Card>
-                                </Box>
+                                {/* Content for the second tab goes here */}
                             </TabPanel>
                         </Paper>
                     </Grid>
