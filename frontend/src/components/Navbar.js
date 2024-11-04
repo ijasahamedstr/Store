@@ -22,7 +22,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const navigate = useNavigate(); // Use the navigate hook
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -42,10 +42,11 @@ function ResponsiveAppBar() {
           src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
           alt="Logo"
           style={{ height: '40px' }}
+          onClick={() => navigate('/')} // Ensure logo click navigates home
         />
       </Box>
       {pages.map((page) => (
-        <MenuItem key={page} component={Link} to={`/${page.toLowerCase()}`}>
+        <MenuItem key={page} component={Link} to={`/${page.toLowerCase()}`} onClick={toggleDrawer(false)}>
           <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
         </MenuItem>
       ))}
@@ -135,7 +136,7 @@ function ResponsiveAppBar() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => {
                   handleCloseUserMenu();
-                  navigate(`/${setting.toLowerCase()}`); // Navigate to the route based on the setting
+                  navigate(`/${setting.toLowerCase()}`);
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>

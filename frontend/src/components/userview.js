@@ -9,7 +9,6 @@ import {
     CardMedia,
     Card,
     CardContent,
-    Badge,
     Button,
     Pagination,
     Dialog,

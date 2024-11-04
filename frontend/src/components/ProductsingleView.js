@@ -4,7 +4,7 @@ import { Container, Grid, Paper, Typography, Button, Box } from '@mui/material';
 import '../css/ProductsingleView.css'; 
 
 const ProductView = () => {
-  const [isInStock, setIsInStock] = useState(true); // Initialize stock state
+  const [isInStock] = useState(true); // Initialize stock state
 
   return (
     <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto' }}>
