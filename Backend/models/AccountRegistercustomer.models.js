@@ -36,12 +36,6 @@ const AccountRegisterCustomerSchema = new Schema({
     address: {
         type: String,
     },
-    proofimage: {
-        type: String,
-    },
-    accountstatus: {
-        type: String,
-    },
     date: {
         type: Date,
         default: Date.now,

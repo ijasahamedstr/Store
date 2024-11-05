@@ -14,6 +14,10 @@ import {
   DialogContent,
 } from "@mui/material";
 import { Link } from 'react-router-dom';
+import '../css/subcategorie.css';
+import headerImg from "../assets/FinalWebFontcopy.jpg";
+
+
 
 function Subcategorie() {
   const products = [
@@ -66,20 +70,14 @@ function Subcategorie() {
   };
 
   return (
-    <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto' }}>
+    <section style={{width: '100%', margin: '0 auto',  backgroundImage: `url(${headerImg})` ,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' }}>
       <img 
         src="https://ehsan.sa/static/images/header-img.svg" 
         alt="Header" 
         style={{ width: '100%', height: 'auto', display: 'block' }}
       />
-      <Container maxWidth="xl" sx={{ padding: 3 }} style={{ direction: 'rtl' }}>
-        <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginY: '20px' }}>
-          <img
-            src="https://ehsan.sa/assets/images/homepage/ahseno-ayah.svg"
-            alt="وَأَحْسِنُوا ۛ إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ"
-            style={{ width: '100%', maxWidth: '400px', height: 'auto', marginBottom: '15px', marginTop: '-50px' }}
-          />
-        </Box>
+      <Container maxWidth="xl" sx={{ padding: 3 }} style={{ direction: 'rtl' ,marginTop:'450px' }}>
+    
         <Grid container spacing={2}>
           {currentProducts.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} lg={2.4} key={index}>

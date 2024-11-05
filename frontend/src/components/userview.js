@@ -18,7 +18,7 @@ import {
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import '../css/ProductsingleView.css';
-import { Link } from 'react-router-dom';
+
 
 const Userview = () => {
     const products = [
@@ -35,6 +35,8 @@ const Userview = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const itemsPerPage = 8; // Adjust the number of items per page
+
+    const [isInStock] = useState(true); // Initialize stock state
 
     // Calculate the indices for the current page
     const indexOfLastProduct = currentPage * itemsPerPage;
@@ -128,7 +130,7 @@ const Userview = () => {
                                             <CardContent>
                                                 <Box mt={1}>
                                                     <Button
-                                                        component={Link} to="/ProductView"
+                                                         onClick={() => handleImageClick(product)}
                                                         variant="contained"
                                                         startIcon={<AddShoppingCartIcon />}
                                                         sx={{
@@ -165,33 +167,86 @@ const Userview = () => {
             </Container>
 
             {/* Dialog for Image Popup */}
-            <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
-            <DialogContent>
-                <IconButton onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
-                    <CloseIcon />
-                </IconButton>
-                {selectedProduct && (
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <CardMedia
-                                component="img"
-                                image={selectedProduct.img}
-                                alt={selectedProduct.title}
-                                sx={{ height: 'auto', maxHeight: 500, objectFit: 'contain' }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
-                                {selectedProduct.title}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                                {selectedProduct.description}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                )}
-            </DialogContent>
-        </Dialog>
+            <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
+    <DialogContent>
+        <IconButton onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
+            <CloseIcon />
+        </IconButton>
+        {selectedProduct && (
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                    <CardMedia
+                        component="img"
+                        image={selectedProduct.img}
+                        alt={selectedProduct.title}
+                        sx={{ height: 'auto', maxHeight: 500, objectFit: 'contain' }}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ direction: 'rtl' }}>
+                    {/* Title with bigger font size */}
+                    <Typography 
+                        variant="h5" 
+                        sx={{ marginTop: 4, fontFamily: 'Noto Kufi Arabic, sans-serif', direction: 'rtl', fontSize: '1.75rem' }}
+                    >
+                        التعريف بالسيرة النبوية
+                    </Typography>
+                    
+                    {/* Price with bigger font size */}
+                    <Typography 
+                        variant="h4" 
+                        color="primary" 
+                        style={{ margin: '10px 0', fontSize: '1.5rem' }}
+                    >
+                        $100
+                    </Typography>
+
+                    {/* In Stock or Out of Stock with bigger font size */}
+                    <Typography 
+                        variant="h6" 
+                        color={isInStock ? 'green' : 'red'} 
+                        style={{ margin: '10px 0', fontSize: '1.25rem' }}
+                    >
+                        {isInStock ? 'In Stock' : 'Out of Stock'}
+                    </Typography>
+
+                    {/* Description with bigger font size */}
+                    <Typography 
+                        variant="body1" 
+                        color="textSecondary" 
+                        sx={{ marginTop: 2, fontFamily: 'Noto Kufi Arabic, sans-serif', direction: 'rtl', fontSize: '1.125rem' }}
+                    >
+                        يسعى هذا المشروع للتوعية بالسيرة النبوية ونشر التعاليم الإسلامية عن طريق تنظيم الزيارات للمتحف الدولي للسيرة النبوية والحضارة الإسلامية للمساهمة في تعريفهم بسيرة النبي صلى الله عليه وسلم.
+                    </Typography>
+
+                    {/* Buy Now Button */}
+                    <Button 
+                        variant="contained" 
+                        color="primary"
+                        sx={{
+                            background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)',
+                            color: '#fff',
+                            '&:hover': {
+                                background: '#115293',
+                            },
+                            padding: { xs: '6px 12px', sm: '8px 16px' },
+                            fontSize: { xs: '0.875rem', sm: '1.25rem' }, // Make button text bigger
+                        }}
+                        style={{ marginTop: '20px' }}
+                        disabled={!isInStock} // Disable button if out of stock
+                    >
+                        Buy Now
+                    </Button>
+
+                    {/* Reviews with bigger font size */}
+                    <Typography variant="body2" style={{ marginTop: '10px', fontSize: '1rem' }}>
+                        ★★★★☆ (50 Reviews)
+                    </Typography>
+                </Grid>
+            </Grid>
+        )}
+    </DialogContent>
+</Dialog>
+
         </section>
     );
 };

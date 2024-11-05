@@ -1,9 +1,7 @@
 import AccountRegisterCustomer from "../models/AccountRegistercustomer.models.js";
 
-export const AccountCreate = async (req, res) => {
-    const { fullname, email, phoneno, address, proofimage, accountstatus } = req.body;
-
- 
+export const AccountCreatcustomer = async (req, res) => {
+    const { fullname, email, phoneno, address, filename } = req.body;
 
     try {
         // Check if the user already exists
@@ -19,8 +17,7 @@ export const AccountCreate = async (req, res) => {
             email,
             phoneno,
             address,
-            proofimage,
-            accountstatus,
+            filename
         });
 
         // Save the new account
