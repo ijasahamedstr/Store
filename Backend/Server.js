@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './lib/db.js';
 import Accountrouter from './routes/AccountRegisterCustomer.route.js';
+import Accountsellerrouter from './routes/AccountRegisterSeller.route.js';
+
 
 const app = express();
 const port = 8000;
@@ -24,6 +26,9 @@ app.get('/', (req, res) => {
 
 //CLIENT -> MIDDLEWARE -> SERVER
 app.use('/register',Accountrouter);
+
+app.use('/Accountseller', Accountsellerrouter);
+
 
 // Start the server
 app.listen(port, () => {

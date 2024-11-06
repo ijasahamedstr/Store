@@ -1,22 +1,23 @@
-import AccountRegisterCustomer from "../models/AccountRegistercustomer.models.js";
 
-export const AccountCreatcustomer = async (req, res) => {
-    const { fullname, email, phoneno, address } = req.body;
+import AccountRegisterSeller from "../models/AccountRegisterseller.models.js";
+
+export const AccountCreatseller = async (req, res) => {
+    const { sfullname, semail, sphoneno, saddress } = req.body;
 
     try {
         // Check if the user already exists
-        const existingUser = await AccountRegisterCustomer.findOne({ email });
+        const existingUser = await AccountRegisterSeller.findOne({ semail });
 
         if (existingUser) {
             return res.status(409).json({ error: "This user already exists in our database." });
         }
 
         // Create a new account
-        const newAccount = new AccountRegisterCustomer({
-            fullname,
-            email,
-            phoneno,
-            address,
+        const newAccount = new AccountRegisterSeller({
+            sfullname,
+            semail,
+            sphoneno,
+            saddress,
         });
 
         // Save the new account

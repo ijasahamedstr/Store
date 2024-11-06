@@ -114,45 +114,75 @@ const Registration = () => {
 
 
     // Seller Form field states
-   // State for form fields
    const [sfullname, setsfullname] = useState('');
    const [semail, setsemail] = useState('');
    const [sphoneno, setsphoneno] = useState('');
    const [saddress, setsaddress] = useState('');
-   const [file, setFile] = useState(null);
 
- 
-   // Handle form submission
+
    const handleSubmitseller = async (e) => {
      e.preventDefault();
-     setLoading(true);
  
-     const formData = new FormData();
-     formData.append('fullname', sfullname);
-     formData.append('email', semail);
-     formData.append('phone', sphoneno);
-     formData.append('address', saddress);
-     formData.append('idProof', file);
+     // Client-side validation
+     if (!sfullname) {
+       toast.error('Please enter your full name.');
+       return;
+     }
+     if (!semail) {
+       toast.error('Please enter your email address.');
+       return;
+     }
+     if (!/\S+@\S+\.\S+/.test(semail)) {
+       toast.error('Please enter a valid email address.');
+       return;
+     }
+     if (!sphoneno) {
+       toast.error('Please enter your phone number.');
+       return;
+     }
+     if (!saddress) {
+       toast.error('Please enter your address.');
+       return;
+     }
+ 
+     setLoading(true); // Show loading spinner
  
      try {
-      const response = await axios.post(`${process.env.REACT_APP_API_HOST}/Sellerrouter`, {
-         method: 'POST',
-         body: formData,
+       const response = await axios.post(`${process.env.REACT_APP_API_HOST}/Accountseller`, {
+        sfullname,
+        semail,
+        sphoneno,
+        saddress,
        });
+       
+       if (response.status === 200 || response.status === 201) {
+         Swal.fire({
+           icon: 'success',
+           title: 'Success!',
+           text: 'Account registered successfully!',
+         });
  
-       const result = await response.json();
- 
-       if (response.ok) {
-         // handle success (e.g., show a success message)
-         alert('Seller registered successfully!');
+         // Clear form fields after successful registration
+         setsfullname('');
+         setsemail('');
+         setsphoneno('');
+         setsaddress('');
        } else {
-         // handle error (e.g., show an error message)
-         alert(`Error: ${result.message}`);
+         Swal.fire({
+           icon: 'error',
+           title: 'Error!',
+           text: 'Registration failed. Please try again.',
+         });
        }
      } catch (error) {
-       alert('Something went wrong, please try again later.');
+       console.error('Registration failed:', error);
+       Swal.fire({
+         icon: 'error',
+         title: 'Error!',
+         text: 'Registration failed. Please try again later.',
+       });
      } finally {
-       setLoading(false);
+       setLoading(false); // Reset loading state
      }
    };
 
@@ -377,20 +407,20 @@ const Registration = () => {
                             </FormControl>
                           </Grid>
 
-                          <Grid item xs={12}>
+                          {/* <Grid item xs={12}>
                             <FormControl fullWidth>
                               <FormLabel htmlFor="idProof" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}>إثبات الهوية</FormLabel>
                               <input
                                 accept="image/*,.pdf"
-                                type="file"
                                 name="idProof"
                                 id="idProof"
                                 required
+                                type="file"
                                 style={{ fontFamily: 'Noto Kufi Arabic', width: '100%', outline: '1px solid #d7dbdd', borderRadius:'4px' }}
                                 onChange={(e) => setFile(e.target.files[0])}
                               />
                             </FormControl>
-                          </Grid>
+                          </Grid> */}
 
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="center" mt={2}>
