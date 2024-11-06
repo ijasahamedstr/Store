@@ -85,7 +85,7 @@ const Registration = () => {
         Swal.fire({
           icon: 'success',
           title: 'Success!',
-          text: 'Account registered successfully!',
+          text: 'Customer Account registered successfully!',
         });
 
         // Clear form fields after successful registration
@@ -114,77 +114,94 @@ const Registration = () => {
 
 
     // Seller Form field states
-   const [sfullname, setsfullname] = useState('');
-   const [semail, setsemail] = useState('');
-   const [sphoneno, setsphoneno] = useState('');
-   const [saddress, setsaddress] = useState('');
+    const [sfullname, setsfullname] = useState('');
+    const [semail, setsemail] = useState('');
+    const [sphoneno, setsphoneno] = useState('');
+    const [saddress, setsaddress] = useState('');
+    const [file, setFile] = useState(null); // Ensure this is null initially
+    const [Accountstatus] = useState('Not verified');
 
+    // Handle changes in input fields
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        switch (name) {
+            case 'sfullname':
+                setsfullname(value);
+                break;
+            case 'semail':
+                setsemail(value);
+                break;
+            case 'sphoneno':
+                setsphoneno(value);
+                break;
+            case 'saddress':
+                setsaddress(value);
+                break;
+            default:
+                break;
+        }
+    };
 
-   const handleSubmitseller = async (e) => {
-     e.preventDefault();
- 
-     // Client-side validation
-     if (!sfullname) {
-       toast.error('Please enter your full name.');
-       return;
-     }
-     if (!semail) {
-       toast.error('Please enter your email address.');
-       return;
-     }
-     if (!/\S+@\S+\.\S+/.test(semail)) {
-       toast.error('Please enter a valid email address.');
-       return;
-     }
-     if (!sphoneno) {
-       toast.error('Please enter your phone number.');
-       return;
-     }
-     if (!saddress) {
-       toast.error('Please enter your address.');
-       return;
-     }
- 
-     setLoading(true); // Show loading spinner
- 
-     try {
-       const response = await axios.post(`${process.env.REACT_APP_API_HOST}/Accountseller`, {
-        sfullname,
-        semail,
-        sphoneno,
-        saddress,
-       });
-       
-       if (response.status === 200 || response.status === 201) {
-         Swal.fire({
-           icon: 'success',
-           title: 'Success!',
-           text: 'Account registered successfully!',
-         });
- 
-         // Clear form fields after successful registration
-         setsfullname('');
-         setsemail('');
-         setsphoneno('');
-         setsaddress('');
-       } else {
-         Swal.fire({
-           icon: 'error',
-           title: 'Error!',
-           text: 'Registration failed. Please try again.',
-         });
-       }
-     } catch (error) {
-       console.error('Registration failed:', error);
-       Swal.fire({
-         icon: 'error',
-         title: 'Error!',
-         text: 'Registration failed. Please try again later.',
-       });
-     } finally {
-       setLoading(false); // Reset loading state
-     }
-   };
+    // Handle file input change
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]); // Store the first file
+    };
+
+    // Submit form data
+    const handleSubmitseller = async (e) => {
+        e.preventDefault();
+
+        // Prepare form data for submission
+        const formData = new FormData();
+        formData.append("photo", file); // Append the selected file
+        formData.append("sfullname", sfullname);
+        formData.append("semail", semail);
+        formData.append("sphoneno", sphoneno);
+        formData.append("saddress", saddress);
+        formData.append("Accountstatus", Accountstatus);
+
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data", // Indicating multipart form
+            },
+        };
+
+        try {
+            // Make the POST request to register the seller
+            const res = await axios.post(`${process.env.REACT_APP_API_HOST}/registerseller`, formData, config);
+
+            // Check response for success or failure
+            if (res.data.status === 401 || !res.data) {
+                // If error, display a failure message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Registration failed. Please try again!',
+                });
+            } else {
+                // On success, show a success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Seller Account registered successfully!',
+                });
+
+                // Clear form fields after successful registration
+                setsfullname('');
+                setsemail('');
+                setsphoneno('');
+                setsaddress('');
+                setFile(null);  // Reset file input to null
+            }
+        } catch (error) {
+            // If there's an error during the request, display a failure message
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Registration failed. Please try again!',
+            });
+        }
+    };
 
   return (
     <section style={{ backgroundColor: '#f2f3f4', width: '100%', margin: '0 auto', direction: 'rtl' }}>
@@ -357,8 +374,9 @@ const Registration = () => {
                                 required
                                 id="sfullname"
                                 fullWidth
-                                value={sfullname}
-                                onChange={(e) => setsfullname(e.target.value)}
+                                name="sfullname" 
+                                value={sfullname} 
+                                onChange={handleChange}
                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                               />
                             </FormControl>
@@ -369,11 +387,12 @@ const Registration = () => {
                               <FormLabel htmlFor="email" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}>البريد الإلكتروني</FormLabel>
                               <TextField
                                 required
-                                type="semail"
+                                type="email"
                                 id="semail"
                                 fullWidth
-                                value={semail}
-                                onChange={(e) => setsemail(e.target.value)}
+                                name="semail" 
+                                value={semail} 
+                                onChange={handleChange}
                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                               />
                             </FormControl>
@@ -386,8 +405,9 @@ const Registration = () => {
                                 required
                                 id="sphoneno"
                                 fullWidth
-                                value={sphoneno}
-                                onChange={(e) => setsphoneno(e.target.value)}
+                                name="sphoneno"  
+                                value={sphoneno} 
+                                onChange={handleChange}
                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                               />
                             </FormControl>
@@ -400,27 +420,29 @@ const Registration = () => {
                                 required
                                 id="saddress"
                                 fullWidth
-                                value={saddress}
-                                onChange={(e) => setsaddress(e.target.value)}
+                                name="saddress"  
+                                value={saddress} 
+                                onChange={handleChange}
                                 inputProps={{ style: { fontFamily: 'Noto Kufi Arabic', padding: '5.5px 10px' } }}
                               />
                             </FormControl>
                           </Grid>
 
-                          {/* <Grid item xs={12}>
+                          <Grid item xs={12}>
                             <FormControl fullWidth>
                               <FormLabel htmlFor="idProof" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}>إثبات الهوية</FormLabel>
                               <input
                                 accept="image/*,.pdf"
-                                name="idProof"
-                                id="idProof"
+                                id="photo"
                                 required
-                                type="file"
+                                type="file" 
+                                onChange={handleFileChange} 
+                                name='photo'                            
                                 style={{ fontFamily: 'Noto Kufi Arabic', width: '100%', outline: '1px solid #d7dbdd', borderRadius:'4px' }}
-                                onChange={(e) => setFile(e.target.files[0])}
+                                
                               />
                             </FormControl>
-                          </Grid> */}
+                          </Grid>
 
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="center" mt={2}>

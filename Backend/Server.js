@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './lib/db.js';
 import Accountrouter from './routes/AccountRegisterCustomer.route.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import Accountsellerrouter from './routes/AccountRegisterSeller.route.js';
 
 
@@ -27,7 +29,14 @@ app.get('/', (req, res) => {
 //CLIENT -> MIDDLEWARE -> SERVER
 app.use('/register',Accountrouter);
 
-app.use('/Accountseller', Accountsellerrouter);
+app.use('/registerseller',Accountsellerrouter);
+
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads/AccountActive', express.static(path.join(__dirname, 'uploads/AccountActive')));
+
 
 
 // Start the server

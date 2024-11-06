@@ -1,5 +1,5 @@
-import { model, Schema } from "mongoose";
-import jwt from "jsonwebtoken";
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import dotenv from 'dotenv';
 
@@ -7,11 +7,16 @@ dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
+// Check if the SECRET_KEY is defined
+if (!SECRET_KEY) {
+    console.error("SECRET_KEY is not defined in environment variables.");
+    process.exit(1);
+}
+
 // Define the schema
-const AccountRegisterSellerSchema = new Schema({
-    sfullname : {
+const AccountsellerSchema = new mongoose.Schema({
+    sfullname: {
         type: String,
-        required: true,
     },
     semail: {
         type: String,
@@ -30,15 +35,21 @@ const AccountRegisterSellerSchema = new Schema({
             }
         },
     },
-    otp: {
-        type: String,
-    },
     saddress: {
         type: String,
     },
+    Accountstatus: {
+        type: String,
+    },
+    imgpath: {
+        type: String,
+        required: true,  // Assuming imgpath is required for each account
+    },
     date: {
         type: Date,
-        default: Date.now,
+    },
+    otp: {
+        type: String,
     },
     tokens: [
         {
@@ -50,7 +61,7 @@ const AccountRegisterSellerSchema = new Schema({
 }, { timestamps: true });
 
 // Token generation method
-AccountRegisterSellerSchema.methods.generateAuthtoken = async function() {
+AccountsellerSchema.methods.generateAuthtoken = async function() {
     try {
         const newToken = jwt.sign({ _id: this._id }, SECRET_KEY, {
             expiresIn: "1d",
@@ -68,6 +79,7 @@ AccountRegisterSellerSchema.methods.generateAuthtoken = async function() {
 };
 
 // Create the model
-const AccountRegisterSeller = model("AccountRegisterSeller", AccountRegisterSellerSchema);
+const Accountseller = mongoose.model('Accountseller', AccountsellerSchema);
 
-export default AccountRegisterSeller;
+// Export the model
+export default Accountseller;

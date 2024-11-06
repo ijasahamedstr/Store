@@ -1,30 +1,43 @@
+import moment from 'moment';
+import Accountactive from '../models/AccountRegisterseller.models.js';
 
-import AccountRegisterSeller from "../models/AccountRegisterseller.models.js";
+// All Account Create
+export const Accountsellercreate = async (req, res) => {
+    const { filename } = req.file;
+    const { sfullname, semail, sphoneno, saddress,Accountstatus } = req.body;
 
-export const AccountCreatseller = async (req, res) => {
-    const { sfullname, semail, sphoneno, saddress } = req.body;
+    // Check if all required fields are provided
+    if (!sfullname || !semail || !sphoneno || !saddress || !Accountstatus || !filename) {
+        return res.status(400).json({ status: 400, message: 'Please fill all the data' });
+    }
 
     try {
-        // Check if the user already exists
-        const existingUser = await AccountRegisterSeller.findOne({ semail });
+        // Check if the email already exists in the database
+        const existingUser = await Accountactive.findOne({ semail });
 
         if (existingUser) {
-            return res.status(409).json({ error: "This user already exists in our database." });
+            return res.status(400).json({ status: 400, message: 'Email is already registered' });
         }
 
-        // Create a new account
-        const newAccount = new AccountRegisterSeller({
+        // If email doesn't exist, create a new user
+        const date = moment().format('YYYY-MM-DD');
+
+        const userdata = new Accountactive({
             sfullname,
             semail,
             sphoneno,
             saddress,
+            Accountstatus,
+            imgpath: filename,
+            date
         });
 
-        // Save the new account
-        const savedAccount = await newAccount.save();
-        res.status(201).json(savedAccount); // 201 Created
+        const finaldata = await userdata.save();
+
+        // Return success response
+        res.status(201).json({ status: 201, finaldata });
     } catch (error) {
-        console.error("Error creating account:", error);
-        res.status(500).json({ error: "Internal server error", details: error.message });
+        console.error('Error registering user:', error);
+        res.status(500).json({ status: 500, message: 'Internal server error', error });
     }
 };
