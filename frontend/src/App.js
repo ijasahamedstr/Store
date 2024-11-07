@@ -18,9 +18,6 @@ import Userview from './components/userview';
 import Registration from './components/Registration';
 import OTPlogin from './components/OTP';
 
-
-
-
 const theme = createTheme({
   typography: {
     fontFamily: 'Changa, sans-serif',
@@ -44,6 +41,7 @@ function App() {
         <Route path="/userview" element={<Userview/>} />
         <Route path="/register" element={<Registration/>} />
         <Route path="/cart" element={<OTPlogin/>} />
+        <Route path="/dashboard" element={<OTPlogin/>} />
       </Routes>
       <Footer/>
     </Router>
