@@ -5,6 +5,8 @@ import Accountrouter from './routes/AccountRegisterCustomer.route.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Accountsellerrouter from './routes/AccountRegisterSeller.route.js';
+import AccountAdminrouter from './routes/Admin/AccountRegisterAdmin.route.js';
+import AccountAdminloginrouter from './routes/Admin/AccountLogin.route.js';
 
 
 const app = express();
@@ -30,6 +32,13 @@ app.get('/', (req, res) => {
 app.use('/register',Accountrouter);
 
 app.use('/registerseller',Accountsellerrouter);
+
+
+
+//ADMIN -> MIDDLEWARE -> SERVER
+app.use('/Adminregister',AccountAdminrouter);
+
+app.use('/Adminlogin', AccountAdminloginrouter);
 
 
 // Get __dirname equivalent for ES modules

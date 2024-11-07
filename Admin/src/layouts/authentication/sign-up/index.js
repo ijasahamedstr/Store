@@ -1,20 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// react-router-dom components
-import { Link } from "react-router-dom";
+import { useState } from "react"; // Changed 'react' to "react"
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -32,7 +16,59 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
+// React Router
+import { Link, useNavigate } from "react-router-dom"; // Import `useNavigate`
+
 function Cover() {
+  // State to hold form data
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
+  const navigate = useNavigate(); // For navigation
+
+  // Function to handle form submission
+  const handleRegister = async (event) => {
+    event.preventDefault();
+
+    if (!name || !email || !password) {
+      alert("All fields are required.");
+      return;
+    }
+
+    if (!agreeTerms) {
+      alert("You must agree to the terms and conditions.");
+      return;
+    }
+
+    try {
+      setIsLoading(true); // Set loading state
+      // Send data to backend for user registration
+      const response = await fetch("http://localhost:8000/Adminregister", {
+        method: "POST", // Correct usage of method
+        headers: { "Content-Type": "application/json" }, // Headers with correct formatting
+        body: JSON.stringify({ name, email, password }), // Body in proper format
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Registration successful! Please sign in.");
+        // Redirect to sign-in page
+        navigate("/authentication/sign-in"); // Corrected '/authentication/sign-in' to "/authentication/sign-in"
+      } else {
+        alert(data.message || "Registration failed.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred while registering.");
+    } finally {
+      setIsLoading(false); // Reset loading state after the request
+    }
+  };
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -55,29 +91,53 @@ function Cover() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" onSubmit={handleRegister} role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput
+                type="text"
+                label="Name"
+                variant="standard"
+                fullWidth
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                variant="standard"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                variant="standard"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
+              <Checkbox checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;I agree the&nbsp;
+                &nbsp;&nbsp;I agree to the&nbsp;
               </MDTypography>
               <MDTypography
                 component="a"
-                href="#"
+                href="/terms" // Replace with actual link to terms and conditions
                 variant="button"
                 fontWeight="bold"
                 color="info"
@@ -87,8 +147,14 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton
+                type="submit"
+                variant="gradient"
+                color="info"
+                fullWidth
+                disabled={isLoading}
+              >
+                {isLoading ? "Registering..." : "Register"}
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

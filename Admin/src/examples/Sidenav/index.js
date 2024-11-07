@@ -123,7 +123,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
     return returnValue;
   });
-
   return (
     <SidenavRoot
       {...rest}
@@ -145,14 +144,24 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
+          <img
+            src="https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png"
+            alt="Responsive Image"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+          />
           <MDBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
-            <MDTypography component="h6" variant="button" fontWeight="medium" color={textColor}>
-              {brandName}
-            </MDTypography>
+            <MDTypography
+              component="h6"
+              variant="button"
+              fontWeight="medium"
+              color={textColor}
+            ></MDTypography>
           </MDBox>
         </MDBox>
       </MDBox>
