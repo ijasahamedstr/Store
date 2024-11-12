@@ -49,3 +49,17 @@ export const CategoriesIndex = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// All Acccount Delete
+
+export const CategoriesDelete = async (req, res) => {
+    const CategoriesDeleteId =  req.params.id;
+    
+    try {
+         await Categories.deleteOne({_id: CategoriesDeleteId})
+         res.json({message:"Acoount deleted!"});
+    } catch (error) {
+     res.status(500).json({message:error.message})
+    }
+ };

@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { Categoriescreate, CategoriesIndex } from '../../controller/Admin/Categories.Controller.js';
+import { Categoriescreate, CategoriesDelete, CategoriesIndex } from '../../controller/Admin/Categories.Controller.js';
 
 // Create a new router instance
 const Categoriesrouter = express.Router();
@@ -33,6 +33,8 @@ const upload = multer({
 Categoriesrouter.post('/', upload.single('photo'),Categoriescreate );
 
 Categoriesrouter.get('/', CategoriesIndex);
+
+Categoriesrouter.delete('/:id', CategoriesDelete);
 
 
 export default Categoriesrouter;

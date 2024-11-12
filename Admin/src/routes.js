@@ -4,12 +4,12 @@ import Billing from "layouts/billing";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Categories from "layouts/categories";
 import AddCategories from "layouts/categories/AddNew";
+import Editcategories from "layouts/categories/Editcategories";
 
 const routes = [
   {
@@ -64,6 +64,11 @@ const routes = [
     type: "collapse",
     route: "/new-categories",
     component: <AddCategories />,
+  },
+  {
+    type: "collapse",
+    route: "/edit-category",
+    component: <Editcategories />,
   },
 ];
 
