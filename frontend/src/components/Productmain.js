@@ -14,12 +14,12 @@ import { Link } from 'react-router-dom';
 
 function EcommerceProductListing() {
   const products = [
-    { title: "دورات "},
-    { title: "طب "},
-    { title: " مواهب أولادنا و بناتنا"},
-    { title: " تخفيضات"},
-    { title: "تبرعات"},
-    { title: "اسأل المختص"},
+    { title: "دورات " },
+    { title: "طب " },
+    { title: " مواهب أولادنا و بناتنا" },
+    { title: " تخفيضات" },
+    { title: "تبرعات" },
+    { title: "اسأل المختص" },
   ];
 
   return (
@@ -42,27 +42,29 @@ function EcommerceProductListing() {
           }}
           mb={3}
         >
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h4" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>
-              قوائم المنتجات
-            </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                padding: '10px 20px',
-                fontSize: { xs: '0.9rem', sm: '1rem' },
-                borderRadius: 2,
-                background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
-                color: '#fff',
-                '&:hover': {
-                  background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
-                },
-              }}
-              style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
-            >
-              عرض المزيد
-            </Button>
-          </Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+          <Typography variant="h4" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.2rem', sm: '1.5rem' }, flex: 1, textAlign: 'center' }}>
+            أقسامنا
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              padding: '10px 20px',
+              fontSize: { xs: '0.9rem', sm: '1rem' },
+              borderRadius: 2,
+              background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
+              color: '#fff',
+              '&:hover': {
+                background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
+              },
+            }}
+            style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
+          >
+            عرض المزيد
+          </Button>
+        </Box>
+
+
         </Box>
         <Grid container spacing={3}>
           {products.map((product, index) => (
@@ -77,6 +79,10 @@ function EcommerceProductListing() {
                   boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Base shadow
                   borderRadius: 2,
                   margin: '10px',
+                  backgroundImage: 'url("https://via.placeholder.com/500x300")', // Replace with your background image URL
+                  backgroundSize: 'cover', // Ensures the image covers the whole card area
+                  backgroundPosition: 'center', // Centers the image within the card
+                  color: 'white', // Makes the text more readable
                 }}
               >
                 <Box display="flex" justifyContent="space-between" p={2}>

@@ -1,6 +1,5 @@
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -9,6 +8,8 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Categories from "layouts/categories";
+import AddCategories from "layouts/categories/AddNew";
 
 const routes = [
   {
@@ -21,11 +22,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "categories",
+    key: "categories",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    route: "/categories",
+    component: <Categories />,
   },
   {
     type: "collapse",
@@ -61,11 +62,8 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
+    route: "/new-categories",
+    component: <AddCategories />,
   },
 ];
 

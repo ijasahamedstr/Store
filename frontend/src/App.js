@@ -31,9 +31,11 @@ function App() {
       <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/products" element={<Products/>} />
-        <Route path="/About" element={<Aboutus />} />
-        <Route path="/Contact" element={<Contactus/>} />
+        <Route path="/أعاقة حركية" element={<Products/>} />
+        <Route path="/إعاقة سمعية" element={<Aboutus />} />
+        <Route path="/إعاقة بصرية" element={<Contactus/>} />
+        <Route path="/من نحن" element={<Aboutus/>} />
+        <Route path="/اتصل بنا" element={<Contactus/>} />
         <Route path="/Login" element={<LoginCard/>} />
         <Route path="/categories" element={<Categoriesview/>} />
         <Route path="/ProductView" element={<ProductView/>} />

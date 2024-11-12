@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,14 +15,16 @@ import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
 
-const pages = ['Products', 'About', 'Contact'];
-const settings = ['Login', 'Register'];
+const pages = ['أعاقة حركية', 'إعاقة سمعية', 'إعاقة بصرية', 'إعاقة ذهنية'];
+const pages1 = ['اتصل بنا', 'من نحن']; // Pages
+const settings = ['Login', 'Register']; // User settings
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Get current location
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -32,11 +34,13 @@ function ResponsiveAppBar() {
 
   const drawerList = () => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, fontFamily: 'Noto Kufi Arabic' }} // Apply font-family here
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
+      dir="rtl" // RTL direction for the Drawer content
     >
+      {/* Logo */}
       <Box sx={{ padding: 2, textAlign: 'center' }}>
         <img
           src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
@@ -45,37 +49,160 @@ function ResponsiveAppBar() {
           onClick={() => navigate('/')} // Ensure logo click navigates home
         />
       </Box>
-      {pages.map((page) => (
-        <MenuItem key={page} component={Link} to={`/${page.toLowerCase()}`} onClick={toggleDrawer(false)}>
-          <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-        </MenuItem>
-      ))}
+
+      {/* Navigation Pages 1 */}
+      <Box sx={{ marginBottom: 2 }}>
+        {pages.map((page) => (
+          <MenuItem
+            key={page}
+            component={Link}
+            to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
+            onClick={toggleDrawer(false)}
+            sx={{
+              backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
+              '&:hover': {
+                backgroundColor: '#444',
+              },
+              color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'inherit',
+            }}
+          >
+            <Typography sx={{ textAlign: 'center', fontFamily: 'Noto Kufi Arabic' }}>{page}</Typography>
+          </MenuItem>
+        ))}
+      </Box>
+
+      {/* Navigation Pages 2 */}
+      <Box sx={{ marginBottom: 2 }}>
+        {pages1.map((page) => (
+          <MenuItem
+            key={page}
+            component={Link}
+            to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
+            onClick={toggleDrawer(false)}
+            sx={{
+              backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
+              '&:hover': {
+                backgroundColor: '#444',
+              },
+              color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'inherit',
+            }}
+          >
+            <Typography sx={{ textAlign: 'center', fontFamily: 'Noto Kufi Arabic' }}>{page}</Typography>
+          </MenuItem>
+        ))}
+      </Box>
+
+      {/* User Settings */}
+      <Box>
+        {settings.map((setting) => (
+          <MenuItem key={setting} onClick={() => {
+            handleCloseUserMenu();
+            navigate(`/${setting.toLowerCase()}`);  // Corrected the path interpolation
+          }} >
+            <Typography sx={{ textAlign: 'center', fontFamily: 'Noto Kufi Arabic' }}>{setting}</Typography>
+          </MenuItem>
+        ))}
+      </Box>
     </Box>
   );
 
   return (
-    <AppBar position="static" sx={{ background: '#000' }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+    <AppBar position="static" sx={{ background: '#000', height: '150px' }} dir="rtl">
+      <Container
+        maxWidth="xl"
+        sx={{
+          '@media (min-width: 1600px)': {
+            maxWidth: '1600px', // Simulate XXL breakpoint for larger screens
+          },
+        }}
+      >
+        <Toolbar disableGutters sx={{ height: '150px', display: 'flex', justifyContent: 'space-between' }}> {/* Flex container */}
+
+          {/* Logo */}
           <Typography
             variant="h6"
             noWrap
             component={Link}
             to="/"
             sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: 'flex',
+              alignItems: 'center',
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              fontSize: { xs: '20px', sm: '30px', md: '40px' }, // Font size adjustment for responsive design
+              paddingLeft: '16px', // Added padding to give space around the logo
             }}
           >
-            <img src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png' alt="Logo" style={{ height: '40px' }} />
+            <img
+              src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
+              alt="Logo"
+              style={{ height: '60px', width: 'auto' }} // Increased logo height
+            />
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* Desktop Menu (Navigation Pages) */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start', paddingRight:'50px' }} dir="rtl"> {/* Align to the left */}
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
+                sx={{
+                  my: 0.5,  // Reduced vertical margin to make buttons closer
+                  mx: 1,    // Optional: Reduced horizontal margin between buttons
+                  color: 'white',
+                  display: 'block',
+                  fontFamily: 'Noto Kufi Arabic',
+                  fontSize: { xs: '12px', sm: '15px', md: '25px' }, // Adjust font size for responsiveness
+                  backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
+                  color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'white',
+                  '&:hover': {
+                    backgroundColor: '#444',
+                  },
+                  borderRadius: '50px',  // Rounded buttons
+                  padding: '6px 14px',   // Optional: Adjust padding for smaller buttons
+                  background: 'linear-gradient(270deg, #0d8f75 20%, #214570 105%)',
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start',paddingLeft:'150px' }} dir="rtl"> {/* Align to the left */}
+            {pages1.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
+                sx={{
+                  my: 0.5,  // Reduced vertical margin to make buttons closer
+                  mx: 1,    // Optional: Reduced horizontal margin between buttons
+                  color: 'white',
+                  display: 'block',
+                  fontFamily: 'Noto Kufi Arabic',
+                  fontSize: { xs: '12px', sm: '15px', md: '25px' }, // Adjust font size for responsiveness
+                  backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
+                  color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'white',
+                  '&:hover': {
+                    backgroundColor: '#444',
+                  },
+                  borderRadius: '50px',  // Rounded buttons
+                  padding: '6px 14px',   // Optional: Adjust padding for smaller buttons
+                  background: 'linear-gradient(270deg, #0d8f75 20%, #214570 105%)',
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          {/* Mobile Menu (Drawer) */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} dir="rtl">
             <IconButton
               size="large"
               aria-label="open navigation menu"
@@ -85,7 +212,7 @@ function ResponsiveAppBar() {
               <MenuIcon />
             </IconButton>
             <Drawer
-              anchor="left"
+              anchor="right"
               open={drawerOpen}
               onClose={toggleDrawer(false)}
               sx={{
@@ -99,25 +226,13 @@ function ResponsiveAppBar() {
             </Drawer>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to={`/${page.toLowerCase()}`}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0, ml: 2 }}>
-            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart">
+          {/* User Settings and Cart Icons */}
+          <Box sx={{ flexGrow: 0, ml: 2 }} dir="rtl">
+            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart" sx={{ paddingLeft: '10px' }}>
               <ShoppingCartIcon />
             </IconButton>
 
+            {/* User Settings Menu */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} aria-label="user menu">
                 <Avatar alt="User Name" src="" />
@@ -136,7 +251,7 @@ function ResponsiveAppBar() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => {
                   handleCloseUserMenu();
-                  navigate(`/${setting.toLowerCase()}`);
+                  navigate(`/${setting.toLowerCase()}`);  // Corrected the path interpolation
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>

@@ -26,7 +26,7 @@ const carouselItems = [
 
 const FadeCarousel = () => {
   return (
-    <Container maxWidth={false} sx={{ padding: 0 }} style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+    <Container maxWidth={false} sx={{ padding: 0 }} style={{ paddingLeft: '0px', paddingRight: '0px',paddingTop:'0px' }}>
       <Box sx={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
         <Carousel fade>
           {carouselItems.map(item => (
@@ -35,7 +35,7 @@ const FadeCarousel = () => {
                 className="d-block w-100"
                 src={item.img}
                 alt={item.title}
-                style={{ height: '60vh', objectFit: 'cover' }} // Adjust height as needed
+                style={{ height: '70vh', objectFit: 'cover' }} // Adjust height as needed
               />
               <Carousel.Caption>
                 <Typography variant="h4" sx={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>

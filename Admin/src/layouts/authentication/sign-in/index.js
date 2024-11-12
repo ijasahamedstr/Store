@@ -28,11 +28,13 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
+// SweetAlert2 import
+import Swal from "sweetalert2";
+
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate(); // For navigating to another page after successful login
 
@@ -43,7 +45,12 @@ function Basic() {
 
     // Simple validation
     if (!email || !password) {
-      setError("Please fill in both fields.");
+      Swal.fire({
+        title: "Error",
+        text: "Please fill in both fields.",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
       return;
     }
 
@@ -52,17 +59,31 @@ function Basic() {
 
       // Handle successful login (store token, user data, etc.)
       if (response.data.token) {
-        // Save token in localStorage or cookies if "Remember me" is checked
+        // Save token in localStorage or sessionStorage
         if (rememberMe) {
           localStorage.setItem("authToken", response.data.token);
         } else {
           sessionStorage.setItem("authToken", response.data.token);
         }
 
-        navigate("/dashboard"); // Navigate to dashboard after successful login
+        // SweetAlert for success
+        Swal.fire({
+          title: "Success!",
+          text: "You have logged in successfully.",
+          icon: "success",
+          confirmButtonText: "Continue",
+        }).then(() => {
+          navigate("/dashboard"); // Navigate to dashboard after SweetAlert is dismissed
+        });
       }
     } catch (err) {
-      setError("Invalid credentials. Please try again.");
+      // SweetAlert for failed login
+      Swal.fire({
+        title: "Error",
+        text: "Invalid credentials. Please try again.",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
     }
   };
 
@@ -83,31 +104,9 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-          </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
-            {error && (
-              <MDBox mb={2} color="error.main" textAlign="center">
-                <MDTypography variant="body2">{error}</MDTypography>
-              </MDBox>
-            )}
             <MDBox mb={2}>
               <MDInput
                 type="email"
@@ -142,21 +141,6 @@ function Basic() {
               <MDButton variant="gradient" color="info" fullWidth type="submit">
                 Sign in
               </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>

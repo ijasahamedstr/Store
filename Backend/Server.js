@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import Accountsellerrouter from './routes/AccountRegisterSeller.route.js';
 import AccountAdminrouter from './routes/Admin/AccountRegisterAdmin.route.js';
 import AccountAdminloginrouter from './routes/Admin/AccountLogin.route.js';
+import Categoriesrouter from './routes/Admin/Categories.route.js';
 
 
 const app = express();
@@ -40,11 +41,14 @@ app.use('/Adminregister',AccountAdminrouter);
 
 app.use('/Adminlogin', AccountAdminloginrouter);
 
+app.use('/categories', Categoriesrouter);
+
 
 // Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use('/uploads/AccountActive', express.static(path.join(__dirname, 'uploads/AccountActive')));
+app.use('/uploads/Categories', express.static(path.join(__dirname, 'uploads/Categories')));
 
 
 
