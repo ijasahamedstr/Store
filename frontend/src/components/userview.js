@@ -1,4 +1,3 @@
-// src/ProductView.js
 import React, { useState } from 'react';
 import {
     Container,
@@ -19,8 +18,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import '../css/ProductsingleView.css';
 
-
-const Userview = () => {
+const Userview = ({ handleCloseDialog, selectedProduct, isInStock }) => {
     const products = [
         { title: "HP Notebook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp", combo: "x4", description: "A powerful notebook for work and play." },
         { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp", combo: "x2", description: "Stylish and high-performance." },
@@ -28,15 +26,14 @@ const Userview = () => {
         { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp", combo: "x1", description: "Designed for business professionals." },
         { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp", combo: "x2", description: "Ultra-portable and powerful." },
         { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp", combo: "x1", description: "Elegance and performance combined." },
-        // Add more products if necessary for testing pagination
     ];
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false); // state for dialog
+    const [selectedProductState, setSelectedProductState] = useState(null);
     const itemsPerPage = 8; // Adjust the number of items per page
 
-    const [isInStock] = useState(true); // Initialize stock state
+    const [isInStockState] = useState(true); // Initialize stock state
 
     // Calculate the indices for the current page
     const indexOfLastProduct = currentPage * itemsPerPage;
@@ -47,13 +44,20 @@ const Userview = () => {
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
     const handleImageClick = (product) => {
-        setSelectedProduct(product); // Set the selected product
+        setSelectedProductState(product); // Set the selected product
         setOpenDialog(true);
     };
 
-    const handleCloseDialog = () => {
+    const handleCloseDialogInternal = () => {
         setOpenDialog(false);
-        setSelectedProduct(null);
+        setSelectedProductState(null);
+    };
+
+    const [openFullScreen, setOpenFullScreen] = useState(false);
+
+    // Handle closing the full-screen modal
+    const handleCloseFullScreen = () => {
+        setOpenFullScreen(false);
     };
 
     return (
@@ -167,22 +171,48 @@ const Userview = () => {
             </Container>
 
             {/* Dialog for Image Popup */}
-            <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
-    <DialogContent>
-        <IconButton onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
-            <CloseIcon />
-        </IconButton>
-        {selectedProduct && (
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <CardMedia
-                        component="img"
-                        image={selectedProduct.img}
-                        alt={selectedProduct.title}
-                        sx={{ height: 'auto', maxHeight: 500, objectFit: 'contain' }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} sx={{ direction: 'rtl' }}>
+            <Dialog open={openDialog} onClose={handleCloseDialogInternal} maxWidth="lg" fullWidth>
+                <DialogContent>
+                    <IconButton onClick={handleCloseDialogInternal} sx={{ position: 'absolute', right: 8, top: 8 }}>
+                        <CloseIcon />
+                    </IconButton>
+                    {selectedProductState && selectedProductState.img && (
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                {/* Image with zoom feature */}
+                                <CardMedia
+                                    component="img"
+                                    image={selectedProductState.img}
+                                    alt={selectedProductState.title}
+                                    sx={{
+                                        height: 'auto',
+                                        maxHeight: 500,
+                                        objectFit: 'contain',
+                                        cursor: 'zoom-in',
+                                    }}
+                                    onClick={() => setOpenFullScreen(true)}  // Open full-screen on image click
+                                />
+                               <Button 
+                                variant="contained" 
+                                color="primary"
+                                sx={{
+                                    background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)',
+                                    color: '#fff',
+                                    '&:hover': {
+                                        background: '#115293',
+                                    },
+                                    padding: { xs: '6px 12px', sm: '8px 16px' },
+                                    fontSize: { xs: '0.875rem', sm: '1.25rem' }, // Make button text bigger
+                                    width: '-webkit-fill-available', // Ensures the button fills available width
+                                }}
+                                style={{ marginTop: '20px' }}
+                                onClick={() => setOpenFullScreen(true)} 
+                            >
+                                ZOOM In
+                            </Button>
+
+                            </Grid>
+                            <Grid item xs={12} sm={6} sx={{ direction: 'rtl' }}>
                     {/* Title with bigger font size */}
                     <Typography 
                         variant="h5" 
@@ -242,9 +272,52 @@ const Userview = () => {
                         ★★★★☆ (50 Reviews)
                     </Typography>
                 </Grid>
-            </Grid>
-        )}
-    </DialogContent>
+                        </Grid>
+                    )}
+                </DialogContent>
+            </Dialog>
+
+            {/* Full-Screen Image Modal */}
+            <Dialog
+  open={openFullScreen}
+  onClose={handleCloseFullScreen}
+  maxWidth="false"
+  fullWidth
+>
+  <DialogContent
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',  // Needed to position the close button properly
+    }}
+  >
+    {/* Close Button */}
+    <IconButton
+      onClick={handleCloseFullScreen}
+      sx={{
+        position: 'absolute',
+        right: 16,  // Adjusted to place the button properly
+        top: 16,    // Adjusted to place the button properly
+        color: 'Black',
+        zIndex: 1000,  // Ensures the close button is on top of the image
+      }}
+    >
+      <CloseIcon />
+    </IconButton>
+
+    {/* Image inside the Dialog */}
+    <img
+      src={selectedProductState?.img || ''}
+      alt={selectedProductState?.title || 'Product Image'}
+      style={{
+        width: '100%',
+        maxHeight: '90vh',  // Ensure the image fits within the view
+        objectFit: 'contain',
+        borderRadius: '8px', // Optional: rounded corners for the image
+      }}
+    />
+  </DialogContent>
 </Dialog>
 
         </section>

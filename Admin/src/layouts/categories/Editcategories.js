@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios"; // Ensure axios is imported
-import Swal from "sweetalert2"; // Ensure Swal is imported
+import axios from "axios";
+import Swal from "sweetalert2";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -21,6 +21,69 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 function Editcategories() {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  const [categorie, setCategorie] = useState({
+    Categorie: "",
+    Categoriedec: "",
+    Categoriesstatus: "",
+    photo: null, // To store the selected image file
+  });
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCategorie((prevCategorie) => ({
+      ...prevCategorie,
+      [name]: value,
+    }));
+  };
+
+  // Handle image file change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+      setCategorie((prevCategorie) => ({
+        ...prevCategorie,
+        photo: file, // Store the file for later use (e.g., in the form submission)
+      }));
+    }
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Create FormData to handle file uploads
+    const formData = new FormData();
+    formData.append("Categorie", categorie.Categorie);
+    formData.append("Categoriedec", categorie.Categoriedec);
+    formData.append("Categoriesstatus", categorie.Categoriesstatus);
+    if (categorie.photo) {
+      formData.append("photo", categorie.photo); // Append image if exists
+    }
+
+    try {
+      // Send data to the backend using axios
+      const response = await axios.put("http://localhost:8000/categories", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Check if the update was successful
+      if (response.status === 200) {
+        Swal.fire("Success", "Category updated successfully", "success");
+      } else {
+        Swal.fire("Error", "Failed to update category", "error");
+      }
+    } catch (error) {
+      Swal.fire("Error", "An error occurred while updating the category", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -43,13 +106,13 @@ function Editcategories() {
                 alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
-                  Add New Category
+                  Edit Category
                 </MDTypography>
               </MDBox>
 
               {/* Add Category Form */}
               <MDBox pt={3} px={2} sx={{ paddingBottom: "24px" }}>
-                <form onSubmit={handleSubmit}>
+                <form noValidate onSubmit={handleSubmit}>
                   {/* Category Name */}
                   <TextField
                     label="Category Name"
@@ -57,8 +120,9 @@ function Editcategories() {
                     fullWidth
                     sx={{ mb: 2 }}
                     name="Categorie"
-                    value={Categorie}
+                    value={categorie.Categorie}
                     onChange={handleChange}
+                    required
                   />
 
                   {/* Category Description */}
@@ -68,12 +132,22 @@ function Editcategories() {
                     fullWidth
                     sx={{ mb: 2 }}
                     name="Categoriedec"
+                    value={categorie.Categoriedec}
+                    onChange={handleChange}
+                    required
                   />
 
                   {/* Dropdown for Show on Menu */}
                   <FormControl fullWidth sx={{ mb: 2 }}>
                     <InputLabel>Show on Menu?</InputLabel>
-                    <Select label="Show on Menu?" sx={{ height: "40px" }} name="Categoriesstatus">
+                    <Select
+                      label="Show on Menu?"
+                      sx={{ height: "40px" }}
+                      name="Categoriesstatus"
+                      value={categorie.Categoriesstatus}
+                      onChange={handleChange}
+                      required
+                    >
                       <MenuItem value="Yes">Yes</MenuItem>
                       <MenuItem value="No">No</MenuItem>
                     </Select>
@@ -86,8 +160,8 @@ function Editcategories() {
                       name="photo"
                       accept="image/*"
                       type="file"
-                      onChange={handleFileChange}
                       style={{ display: "none" }}
+                      onChange={handleImageChange}
                     />
                     <Button
                       variant="outlined"

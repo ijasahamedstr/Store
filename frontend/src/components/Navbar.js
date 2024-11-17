@@ -15,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
 
-const pages = ['أعاقة حركية', 'إعاقة سمعية', 'إعاقة بصرية', 'إعاقة ذهنية'];
 const pages1 = ['اتصل بنا', 'من نحن']; // Pages
 const settings = ['Login', 'Register']; // User settings
 
@@ -43,7 +42,7 @@ function ResponsiveAppBar() {
       {/* Logo */}
       <Box sx={{ padding: 2, textAlign: 'center' }}>
         <img
-          src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
+          src='https://i.ibb.co/7Xhq73t/LOGO-Laser-platform-for-Disability.png'
           alt="Logo"
           style={{ height: '40px' }}
           onClick={() => navigate('/')} // Ensure logo click navigates home
@@ -51,25 +50,6 @@ function ResponsiveAppBar() {
       </Box>
 
       {/* Navigation Pages 1 */}
-      <Box sx={{ marginBottom: 2 }}>
-        {pages.map((page) => (
-          <MenuItem
-            key={page}
-            component={Link}
-            to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
-            onClick={toggleDrawer(false)}
-            sx={{
-              backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
-              '&:hover': {
-                backgroundColor: '#444',
-              },
-              color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'inherit',
-            }}
-          >
-            <Typography sx={{ textAlign: 'center', fontFamily: 'Noto Kufi Arabic' }}>{page}</Typography>
-          </MenuItem>
-        ))}
-      </Box>
 
       {/* Navigation Pages 2 */}
       <Box sx={{ marginBottom: 2 }}>
@@ -107,16 +87,16 @@ function ResponsiveAppBar() {
   );
 
   return (
-    <AppBar position="static" sx={{ background: '#000', height: '150px' }} dir="rtl">
+    <AppBar position="static" sx={{ background: '#000', height: '100px' }} dir="rtl">
       <Container
-        maxWidth="xl"
+        maxWidth="xxl"
         sx={{
           '@media (min-width: 1600px)': {
-            maxWidth: '1600px', // Simulate XXL breakpoint for larger screens
+            maxWidth: '1900px', // Simulate XXL breakpoint for larger screens
           },
         }}
       >
-        <Toolbar disableGutters sx={{ height: '150px', display: 'flex', justifyContent: 'space-between' }}> {/* Flex container */}
+        <Toolbar disableGutters sx={{ height: '100px', display: 'flex', justifyContent: 'space-between' }}> {/* Flex container */}
 
           {/* Logo */}
           <Typography
@@ -135,44 +115,12 @@ function ResponsiveAppBar() {
               paddingLeft: '16px', // Added padding to give space around the logo
             }}
           >
-            <img
-              src='https://digilaser.sa/wp-content/uploads/2024/04/78-removebg-preview.png'
-              alt="Logo"
-              style={{ height: '60px', width: 'auto' }} // Increased logo height
-            />
+            <img src='https://i.ibb.co/7Xhq73t/LOGO-Laser-platform-for-Disability.png' alt="Logo" style={{ height: '80px' }} />
           </Typography>
 
           {/* Desktop Menu (Navigation Pages) */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start', paddingRight:'50px' }} dir="rtl"> {/* Align to the left */}
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to={`/${page.toLowerCase()}`}  // Corrected the path interpolation
-                sx={{
-                  my: 0.5,  // Reduced vertical margin to make buttons closer
-                  mx: 1,    // Optional: Reduced horizontal margin between buttons
-                  color: 'white',
-                  display: 'block',
-                  fontFamily: 'Noto Kufi Arabic',
-                  fontSize: { xs: '12px', sm: '15px', md: '25px' }, // Adjust font size for responsiveness
-                  backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
-                  color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'white',
-                  '&:hover': {
-                    backgroundColor: '#444',
-                  },
-                  borderRadius: '50px',  // Rounded buttons
-                  padding: '6px 14px',   // Optional: Adjust padding for smaller buttons
-                  background: 'linear-gradient(270deg, #0d8f75 20%, #214570 105%)',
-                }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start',paddingLeft:'150px' }} dir="rtl"> {/* Align to the left */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start',paddingLeft:'20px' }} dir="ltr"> {/* Align to the left */}
             {pages1.map((page) => (
               <Button
                 key={page}
@@ -185,15 +133,8 @@ function ResponsiveAppBar() {
                   color: 'white',
                   display: 'block',
                   fontFamily: 'Noto Kufi Arabic',
-                  fontSize: { xs: '12px', sm: '15px', md: '25px' }, // Adjust font size for responsiveness
-                  backgroundColor: location.pathname === `/${page.toLowerCase()}` ? '#06f9f3' : 'transparent',
-                  color: location.pathname === `/${page.toLowerCase()}` ? '#000' : 'white',
-                  '&:hover': {
-                    backgroundColor: '#444',
-                  },
-                  borderRadius: '50px',  // Rounded buttons
-                  padding: '6px 14px',   // Optional: Adjust padding for smaller buttons
-                  background: 'linear-gradient(270deg, #0d8f75 20%, #214570 105%)',
+                  fontSize: { xs: '12px', sm: '15px', md: '20px' }, // Adjust font size for responsiveness
+                  borderRadius: '50px',  // Rounded buttons  // Optional: Adjust padding for smaller buttons
                 }}
               >
                 {page}
@@ -228,7 +169,7 @@ function ResponsiveAppBar() {
 
           {/* User Settings and Cart Icons */}
           <Box sx={{ flexGrow: 0, ml: 2 }} dir="rtl">
-            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart" sx={{ paddingLeft: '10px' }}>
+            <IconButton color="inherit" component={Link} to="/cart" aria-label="shopping cart" sx={{ paddingLeft: '20px' }}>
               <ShoppingCartIcon />
             </IconButton>
 

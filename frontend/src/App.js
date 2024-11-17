@@ -17,6 +17,16 @@ import Subcategorie from './components/subcategorie';
 import Userview from './components/userview';
 import Registration from './components/Registration';
 import OTPlogin from './components/OTP';
+import Motordisability from './components/Motordisability';
+import Medicine from './components/categories/medicine';
+import EncyclopediaofDisability from './components/categories/Encyclopedia-of-Disability';
+import Courses from './components/categories/Courses';
+import Donations from './components/categories/Donations';
+import Test from './components/test';
+import Hearingdisability from './components/categories/Hearing-disability';
+import Visualimpairment from './components/categories/Visual-impairment';
+import Autism from './components/categories/Autism';
+import Learningdifficulties from './components/categories/Learning-difficulties';
 
 const theme = createTheme({
   typography: {
@@ -42,8 +52,17 @@ function App() {
         <Route path="/Subcategorie" element={<Subcategorie/>} />
         <Route path="/userview" element={<Userview/>} />
         <Route path="/register" element={<Registration/>} />
-        <Route path="/cart" element={<OTPlogin/>} />
+        <Route path="/cart" element={<Test/>} />
         <Route path="/dashboard" element={<OTPlogin/>} />
+        <Route path="/Motor-disability" element={<Motordisability/>} />
+        <Route path="/Hearing-disability" element={<Hearingdisability/>} />
+        <Route path="/Visual-impairment" element={<Visualimpairment/>} />
+        <Route path="/Autism" element={<Autism/>} />
+        <Route path="/Learning-difficulties" element={<Learningdifficulties/>} />
+        <Route path="/categories/medicine" element={<Medicine/>} />
+        <Route path="/categories/Encyclopedia-of-Disability" element={<EncyclopediaofDisability/>} />
+        <Route path="/categories/Courses" element={<Courses/>} />
+        <Route path="/categories/donations" element={<Donations/>} />
       </Routes>
       <Footer/>
     </Router>

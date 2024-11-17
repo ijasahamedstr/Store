@@ -13,14 +13,38 @@ import {
 import { Link } from 'react-router-dom';
 
 function Categoriesview() {
+  // Products data including title, link, and background image
   const products = [
-    { title: "الأدب والشعر" },
-    { title: "الخط العربي" },
-    { title: "رسم" },
-    { title: " مواهب متفرقة" },
-    { title: "تفصيل" },
-    { title: "طبخ" },
-    // Add more products as needed for demonstration
+    {
+      title: "الأدب والشعر",
+      link: "/subcategory/1", // unique link for each category
+      backgroundImage: "https://example.com/images/ads-and-poetry.jpg",
+    },
+    {
+      title: "الخط العربي",
+      link: "/Subcategorie", // unique link for each category
+      backgroundImage: "https://example.com/images/arabic-calligraphy.jpg",
+    },
+    {
+      title: "رسم",
+      link: "/subcategory/3", // unique link for each category
+      backgroundImage: "https://example.com/images/drawing.jpg",
+    },
+    {
+      title: "مواهب متفرقة",
+      link: "/subcategory/4", // unique link for each category
+      backgroundImage: "https://example.com/images/misc-talents.jpg",
+    },
+    {
+      title: "تفصيل",
+      link: "/subcategory/5", // unique link for each category
+      backgroundImage: "https://example.com/images/sewing.jpg",
+    },
+    {
+      title: "طبخ",
+      link: "/subcategory/6", // unique link for each category
+      backgroundImage: "https://example.com/images/cooking.jpg",
+    },
   ];
 
   // Pagination states
@@ -58,28 +82,20 @@ function Categoriesview() {
           }}
           mb={3}
         >
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h4" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>
+          <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '100%' }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontFamily: 'Noto Kufi Arabic, sans-serif',
+                fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                textAlign: 'center',
+              }}
+            >
               قوائم المنتجات
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                padding: '10px 20px',
-                fontSize: { xs: '0.9rem', sm: '1rem' },
-                borderRadius: 2,
-                background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
-                color: '#fff',
-                '&:hover': {
-                  background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
-                },
-              }}
-              style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
-            >
-              عرض المزيد
-            </Button>
           </Box>
         </Box>
+
         <Grid container spacing={3}>
           {currentProducts.map((product, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -93,6 +109,9 @@ function Categoriesview() {
                   boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
                   borderRadius: 2,
                   margin: '10px',
+                  backgroundImage: `url(${product.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                 }}
               >
                 <Box display="flex" justifyContent="space-between" p={2}>
@@ -111,7 +130,8 @@ function Categoriesview() {
                 <CardContent>
                   <Box mt={1}>
                     <Button
-                      component={Link} to="/Subcategorie"
+                      component={Link}
+                      to={product.link} // Dynamic link to different page for each product
                       variant="contained"
                       sx={{
                         background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)',
@@ -133,6 +153,7 @@ function Categoriesview() {
             </Grid>
           ))}
         </Grid>
+
         <Box display="flex" justifyContent="center" mt={4}>
           <Pagination
             count={totalPages}

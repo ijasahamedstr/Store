@@ -1,6 +1,6 @@
 // Import required modules
 import express from "express";
-import { AccountCreatAdmin } from "../../controller/Admin/AccountRegisterAdmin.Controller.js";
+import { AccountCreatcustomer } from "../../controller/AccountRegisterCustomer.Controller.js";
 
 
 const AccountAdminrouter = express.Router()
@@ -8,8 +8,7 @@ const AccountAdminrouter = express.Router()
 //CURD Functionality of Registertion
 
 // Create the Data Register
-AccountAdminrouter.post('/',);
-
+AccountAdminrouter.post('/',AccountCreatcustomer);
 
 
 export default AccountAdminrouter;

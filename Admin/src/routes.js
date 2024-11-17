@@ -67,7 +67,7 @@ const routes = [
   },
   {
     type: "collapse",
-    route: "/edit-category",
+    route: "/edit-category/:id",
     component: <Editcategories />,
   },
 ];

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Box, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
+import { Box, Typography, Button, Grid, Card, CardContent, Badge } from '@mui/material';
+import { Link } from 'react-router-dom'; // Import Link for routing
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -64,7 +64,7 @@ const DraggableCardSlider = () => {
             background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)',
             color: '#fff',
             padding: 2,
-            borderRadius: 1
+            borderRadius: 1,
           }}
           mb={3}
         >
@@ -72,27 +72,28 @@ const DraggableCardSlider = () => {
             <Typography variant="h4" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>
               قوائم المنتجات
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                padding: '10px 20px',
-                fontSize: { xs: '0.9rem', sm: '1rem' },
-                borderRadius: 2,
-                background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
-                color: '#fff',
-                '&:hover': {
-                  background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
-                },
-              }}
-              style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
-            >
-              عرض المزيد
-            </Button>
+            <Link to="/another-page"> {/* Link to a different page */}
+              <Button
+                variant="contained"
+                sx={{
+                  padding: '10px 20px',
+                  fontSize: { xs: '0.9rem', sm: '1rem' },
+                  borderRadius: 2,
+                  background: 'linear-gradient(90deg, #4CAF50, #66BB6A)',
+                  color: '#fff',
+                  '&:hover': {
+                    background: 'linear-gradient(90deg, #66BB6A, #4CAF50)',
+                  },
+                }}
+              >
+                عرض المزيد
+              </Button>
+            </Link>
           </Box>
         </Box>
         <Grid container spacing={3}>
-          {products.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+          {items.map((category, index) => (
+            <Grid item xs={12} sm={6} md={4} key={category.id}>
               <Card
                 sx={{
                   transition: '0.3s',
@@ -103,41 +104,31 @@ const DraggableCardSlider = () => {
                   boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)', // Base shadow
                   borderRadius: 2,
                   margin: '10px',
+                  background: index % 2 === 0 ? '#f9f9f9' : '#ffffff', // Change background color for odd/even index
                 }}
               >
-                <Box display="flex" justifyContent="space-between" p={2}>
-                  <Badge
-                    color="info"
-                    sx={{ borderRadius: "50%", width: 35, height: 35, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                  />
-                </Box>
-
                 <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 200 }}>
-                  <Typography variant="h5" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: { xs: '1.5rem', sm: '2rem' }, lineHeight: 1.5 }}>
-                    {product.title}
-                  </Typography>
-                  <Typography variant="subtitle1" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', marginTop: 1, fontSize: { xs: '0.9rem', sm: '1rem' } }}>
-                    {product.title2}
+                  <img src={category.img} alt={category.name} width="100px" height="100px" />
+                  <Typography variant="h5" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif', fontSize: '1.5rem', lineHeight: 1.5 }}>
+                    {category.name}
                   </Typography>
                 </CardContent>
 
                 <CardContent>
                   <Box mt={1}>
                     <Button
-                      component={Link} to="/categories"
+                      component={Link} to={`/category/${category.id}`}
                       variant="contained"
-                      startIcon={<RemoveRedEyeIcon />}
                       sx={{
                         background: 'linear-gradient(270deg,#0d8f75 20%,#214570 105%)',
                         color: '#fff',
                         '&:hover': {
                           background: '#115293',
                         },
-                        padding: { xs: '6px 12px', sm: '8px 16px' },
-                        fontSize: { xs: '0.875rem', sm: '1rem' },
+                        padding: '8px 16px',
+                        fontSize: '1rem',
                       }}
                       fullWidth
-                      style={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}
                     >
                       عرض المزيد
                     </Button>

@@ -14,42 +14,22 @@ import {
   DialogContent,
 } from "@mui/material";
 import { Link } from 'react-router-dom';
-import '../css/subcategorie.css';
+import '../css/subcategorie.css'; // You can move more styles to this file
 import headerImg from "../assets/FinalWebFontcopy.jpg";
-
-
 
 function Subcategorie() {
   const products = [
-    // List of products
-    { title: "HP Notebook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp",username: "ايجاس احمد", profileImg: "https://via.placeholder.com/40"},
-    { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp",username: "عبد الله", profileImg: "https://via.placeholder.com/40"},
-    { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp",username: "احمد", profileImg: "https://via.placeholder.com/40"},
-    { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40" },
-    { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp",username: "User1", profileImg: "https://via.placeholder.com/40" },
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Toshiba B77", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp",username: "User1", profileImg: "https://via.placeholder.com/40" },
-    { title: "Lenovo ThinkPad", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Dell XPS 13", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/8.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    { title: "Asus ZenBook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/9.webp",username: "User1", profileImg: "https://via.placeholder.com/40"},
-    // ... other products
+    { title: "HP Notebook", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp", username: "ايجاس احمد", profileImg: "https://via.placeholder.com/40" },
+    { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp", username: "عبد الله", profileImg: "https://via.placeholder.com/40" },
+    { title: "HP Envy", img: "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp", username: "عبد الله", profileImg: "https://via.placeholder.com/40" },
+    // Add more products if needed
   ];
 
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
 
-  const itemsPerPage = 20;
+  const itemsPerPage = 9;
   const indexOfLastProduct = page * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -70,17 +50,25 @@ function Subcategorie() {
   };
 
   return (
-    <section style={{width: '100%', margin: '0 auto',  backgroundImage: `url(${headerImg})` ,backgroundSize: 'cover',backgroundRepeat: 'no-repeat' }}>
-      <img 
-        src="https://ehsan.sa/static/images/header-img.svg" 
-        alt="Header" 
+    <section 
+      style={{ 
+        width: '100%', 
+        margin: '0 auto', 
+        backgroundImage: `url(${headerImg})`, 
+        backgroundSize: 'cover', 
+        backgroundRepeat: 'no-repeat',
+        paddingTop: '300px' 
+      }}
+    >
+      <img
+        src="https://ehsan.sa/static/images/header-img.svg"
+        alt="Header"
         style={{ width: '100%', height: 'auto', display: 'block' }}
       />
-      <Container maxWidth="xl" sx={{ padding: 3 }} style={{ direction: 'rtl' ,marginTop:'450px' }}>
-    
-        <Grid container spacing={2}>
-          {currentProducts.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={2.4} key={index}>
+      <Container maxWidth="xl" sx={{ padding: 3 }} style={{ direction: 'rtl', marginTop: '150px' }}>
+        <Grid container spacing={4}> {/* Increased spacing here */}
+          {currentProducts.map(({ title, img, username, profileImg }, index) => (
+            <Grid item xs={4} sm={4} md={4} lg={4} key={index}>
               <Card
                 sx={{
                   transition: '0.3s',
@@ -89,6 +77,7 @@ function Subcategorie() {
                     transform: 'scale(1.02)',
                   },
                   borderRadius: 2,
+                  marginBottom: 3, // Added bottom margin for vertical spacing
                 }}
               >
                 <Box display="flex" justifyContent="space-between" p={2}>
@@ -96,22 +85,25 @@ function Subcategorie() {
                     تأثيث منازل المتعففين
                   </Typography>
                   <Badge
-                    badgeContent={product.combo}
+                    badgeContent={0} // Fallback for undefined combo
                     color="info"
                     sx={{ borderRadius: "50%", width: 35, height: 35, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   />
                 </Box>
                 <CardMedia
                   component="img"
-                  image={product.img}
-                  alt={product.title}
-                  onClick={() => handleImageClick(product.img)} // Add onClick handler
-                  sx={{ height: { xs: 150, sm: 200 }, objectFit: "cover", borderTopLeftRadius: 2, borderTopRightRadius: 2, cursor: 'pointer' }} // Add cursor pointer
+                  image={img}
+                  alt={title}
+                  onClick={() => handleImageClick(img)}
+                  sx={{ height: { xs: 150, sm: 200 }, objectFit: "cover", borderTopLeftRadius: 2, borderTopRightRadius: 2, cursor: 'pointer' }}
+                  loading="lazy"
+                  role="button"
+                  tabIndex="0"
                 />
                 <Box display="flex" alignItems="center" p={1}>
                   <CardMedia
                     component="img"
-                    image={product.profileImg}
+                    image={profileImg}
                     alt="User Profile"
                     sx={{
                       borderRadius: '50%',
@@ -121,10 +113,9 @@ function Subcategorie() {
                       border: '4px solid white',
                       boxShadow: 2,
                     }}
-                    style={{ marginLeft: '8px' }}
                   />
                   <Typography variant="body2" sx={{ fontFamily: 'Noto Kufi Arabic, sans-serif' }}>
-                    {product.username}
+                    {username}
                   </Typography>
                 </Box>
                 <CardContent>
@@ -163,9 +154,15 @@ function Subcategorie() {
           />
         </Box>
       </Container>
+
+      {/* Image Modal */}
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent>
-          <img src={selectedImage} alt="Selected" style={{ width: '100%', height: 'auto' }} />
+          <img 
+            src={selectedImage} 
+            alt="Selected" 
+            style={{ width: '100%', height: 'auto', objectFit: 'contain' }} 
+          />
         </DialogContent>
       </Dialog>
     </section>
