@@ -10,6 +10,20 @@ import Icon from "@mui/material/Icon";
 import Categories from "layouts/categories";
 import AddCategories from "layouts/categories/AddNew";
 import Editcategories from "layouts/categories/Editcategories";
+import MidCategories from "layouts/midcategories";
+import FormatSizeIcon from "@mui/icons-material/FormatSize";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import CategoryIcon from "@mui/icons-material/Category";
+import Size from "layouts/Size";
+import AddSize from "layouts/Size/AddNew";
+import Color from "layouts/Color";
+import AddColor from "layouts/Color/AddNew";
+import City from "layouts/City";
+import Addcity from "layouts/City/AddNew";
+import ShippingCost from "layouts/ShippingCost";
+import AddShippingCost from "layouts/ShippingCost/AddNew";
 
 const routes = [
   {
@@ -27,6 +41,46 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/categories",
     component: <Categories />,
+  },
+  {
+    type: "collapse",
+    name: "Midcategories",
+    key: "Midcategories",
+    icon: <CategoryIcon />,
+    route: "/midcategories",
+    component: <MidCategories />,
+  },
+  {
+    type: "collapse",
+    name: "Size",
+    key: "Size",
+    icon: <FormatSizeIcon />,
+    route: "/Size",
+    component: <Size />,
+  },
+  {
+    type: "collapse",
+    name: "Color",
+    key: "Color",
+    icon: <ColorLensIcon />,
+    route: "/Color",
+    component: <Color />,
+  },
+  {
+    type: "collapse",
+    name: "City",
+    key: "City",
+    icon: <LocationCityIcon />,
+    route: "/City",
+    component: <City />,
+  },
+  {
+    type: "collapse",
+    name: "Shipping Cost",
+    key: "Shipping Cost",
+    icon: <MonetizationOnIcon />,
+    route: "/Shipping-Cost",
+    component: <ShippingCost />,
   },
   {
     type: "collapse",
@@ -69,6 +123,26 @@ const routes = [
     type: "collapse",
     route: "/edit-category/:id",
     component: <Editcategories />,
+  },
+  {
+    type: "collapse",
+    route: "/new-size",
+    component: <AddSize />,
+  },
+  {
+    type: "collapse",
+    route: "/new-color",
+    component: <AddColor />,
+  },
+  {
+    type: "collapse",
+    route: "/new-city",
+    component: <Addcity />,
+  },
+  {
+    type: "collapse",
+    route: "/new-shippingcost",
+    component: <AddShippingCost />,
   },
 ];
 

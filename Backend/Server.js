@@ -17,6 +17,7 @@ import Shipingcityrouter from "./routes/Admin/ShipingCity.route.js";
 import cityrouter from "./routes/Admin/City.route.js";
 import MidCategoriesrouter from "./routes/Admin/MidCategories.route.js";
 import EndCategoriesrouter from "./routes/Admin/EndCategories.route.js";
+import AddProductrouter from "./routes/Client/AddProduct.route.js";
 
 
 // Create an instance of Express
@@ -48,6 +49,8 @@ app.use(express.urlencoded({extended:true}))
 app.use('/register',Accountrouter);
 
 app.use('/registerseller',Accountsellerrouter);
+
+app.use('/AddProduct',AddProductrouter);
 
 
 
